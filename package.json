@@ -1,0 +1,40 @@
+{
+  "name": "discord-bot",
+  "description": "No-Pixel Mods Discord bot for mod/streamer verification and manual/automatic ban logging.",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:NoPixel-Mod-Discord/discord-bot.git",
+  "author": "NoPixel-Mod-Discord",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "dev": "nodemon src/index.js",
+    "check-format": "prettier --check .",
+    "check-lint": "eslint . --ext js",
+    "format": "prettier --write .",
+    "lint": "eslint . --ext js --fix",
+    "check": "check-format && check-lint",
+    "fix": "npm run format && npm run lint",
+    "start": "node src/index.js",
+    "prepare": "husky install"
+  },
+  "devDependencies": {
+    "eslint": "^8.18.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "husky": "^8.0.0",
+    "lint-staged": "^13.0.2",
+    "nodemon": "^2.0.16",
+    "prettier": "^2.7.1"
+  },
+  "dependencies": {
+    "discord.js": "^13.8.0",
+    "dotenv": "^16.0.1",
+    "tmi.js": "^1.8.5"
+  },
+  "lint-staged": {
+    "*.js": "eslint --fix",
+    "*": "prettier --write"
+  }
+}
