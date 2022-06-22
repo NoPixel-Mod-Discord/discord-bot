@@ -2,6 +2,7 @@
 const fs = require("fs");
 const path = require("path");
 const { Client, Intents, Collection } = require("discord.js");
+
 require("dotenv").config();
 
 // Env Variables
@@ -38,6 +39,8 @@ for (const file of commandsFiles) {
   const command = require(filePath);
   client.commands.set(command.data.name, command);
 }
+
+module.exports = client;
 
 // Client Login
 client.login(token);

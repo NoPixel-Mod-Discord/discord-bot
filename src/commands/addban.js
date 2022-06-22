@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const { prisma } = require("../prisma");
+const getUserId = require("../lib/twitch/getUserId");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -42,7 +43,7 @@ module.exports = {
       data: {
         banTime: new Date(),
         banVenue: interaction.options.getString("venue"),
-        userId: interaction.options.getString("user"),
+        userId: await getUserId(interaction.options.getString("user")),
         channelId: interaction.options.getString("streamer"),
         moderatorId: interaction.user.id,
         reason: interaction.options.getString("reason")
