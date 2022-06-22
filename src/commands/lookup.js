@@ -29,7 +29,7 @@ module.exports = {
       });
       for (const ban of response) {
         await interaction.editReply({
-          content: `${ban.moderator_id} banned ${ban.user_id} from ${ban.channel_id} for ${ban.reason}`
+          content: `${ban.moderatorId} banned ${ban.userId} from ${ban.channelId} for ${ban.reason}`
         });
       }
     }
