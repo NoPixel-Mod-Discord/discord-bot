@@ -35,3 +35,84 @@ for (const file of eventFiles) {
 }
 
 client.login(process.env.DISCORD_BOT_TOKEN);
+
+
+//////////////////
+////TWITCH BOT////
+//////////////////
+const tmi = require("tmi.js");
+const twitchFunctions = require(`./functions/twitch.js`);
+const botconfig = require("./botconfig.json");
+
+
+let channelNames = [ 
+  "natty",
+  "notnattybtw",
+  "uhSnow",
+  "Ray__C",
+  "GTAWiseGuy",
+  "Wolfabelle",
+  "Deansocool",
+  "Timmac",
+  "kyliebitkin",
+  "Pezz",
+  "LAGTVMaximusBlack",
+  "iddqd",
+  "Simo",
+  "Raided",
+  "CydRose",
+  "Farmhouse78",
+  "Silent",
+  "Wiked",
+  "CathFawr",
+  "Moboking",
+  "ChrisTombstone",
+  "Myles_Away"
+]
+
+//Define TMI config options
+const options = {
+    options: {
+        clientId: process.env.CLIENT_ID,
+        debug: true,
+    },
+    connection: {
+        cluster: "aws",
+        reconnect: true,
+        maxReconnectInterval: 60000,
+        reconnectInterval: 2000,
+        secure: true,
+    },
+    identity: {
+        username: process.env.TWITCHBOT_USERNAME,
+        password: process.env.TWITCHBOT_TOKEN,
+    },
+    channels: channelNames
+}
+
+
+//Create a new TMI client instance
+const twitch_client = new tmi.client(options);
+
+//Connect the bot to all Twitch channels
+twitch_client.connect();
+
+//Run when the bot connects to Twitch
+twitch_client.on("connected", (address, port) => {
+    twitchFunctions.onConnect(options);
+});
+
+//Log if the bot disconnects from Twitch
+twitch_client.on("disconnected", (reason) => {
+    twitchFunctions.onDisconnect(options);
+});
+
+//Run on a ban done by a moderator/broadcaster in a twitch channel
+twitch_client.on("ban", (channel, username, reason, userstate) => { // reason always null & userstate unused?
+    twitchFunctions.onBan(channel, username, botconfig, client);
+});
+
+//Run on a timeout done by a moderator/broadcaster in a twitch channel
+twitch_client.on("timeout", (channel, username, reason, duration, userstate) => {
+    twitchFunctions.onTimeout(channel, username, duration, botconfig, client);
+});

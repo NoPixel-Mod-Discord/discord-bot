@@ -9,7 +9,7 @@
   "private": true,
   "scripts": {
     "dev": "nodemon src/index.js",
-    "bot-dev": "node src/bot.js",
+    "bot-dev": "nodemon src/bot.js",
     "check-format": "prettier --check .",
     "check-lint": "eslint . --ext js",
     "format": "prettier --write .",
