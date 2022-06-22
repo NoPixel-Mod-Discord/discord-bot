@@ -1,0 +1,77 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["referentialIntegrity"]
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+  referentialIntegrity = "prisma"
+}
+
+model User {
+  id            Int       @id @default(autoincrement())
+  userId        String    @unique
+  venue         Venue
+  createdAt     DateTime
+  updatedAt     DateTime
+  alts          Alts[]
+}
+
+model Alts {
+  id            Int       @id @default(autoincrement())
+  altVenue      Venue
+  altId         String
+  userId        User     @relation(fields: [altId], references: [userId])
+
+}
+
+model Streamer {
+  id            Int       @id @default(autoincrement())
+  userId        String
+  createdAt     DateTime
+  verified      Boolean
+  channelId     String
+  streamType    Venue
+  mods          Mods[]
+}
+
+model Mods {
+  id            Int       @id @default(autoincrement())
+  userId        String
+  createdAt     DateTime
+  verified      Boolean
+  channelId     String
+  modType       Venue
+  streamerId    Streamer  @relation(fields: [userId], references: [channelId])
+}
+
+model Channel {
+  id            Int       @id @default(autoincrement())
+  streamerId    String
+  createdAt     DateTime
+  verified      Boolean
+  channelId     String?
+  channelType   Venue
+}
+
+model Ban {
+  id           Int        @id @default(autoincrement())
+  banTime      DateTime   @default(now())
+  banVenue     Venue      
+  userId       String
+  isBanned     Boolean    @default(true)   
+  channelId    String       
+  moderatorId  String
+  reason       String
+}
+
+enum Venue {
+  twitch
+  youtube
+  facebook
+  discord
+}

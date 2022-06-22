@@ -11,7 +11,9 @@ module.exports = {
   },
   plugins: ["prettier"],
   rules: {
+    camelcase: "off",
+    "new-cap": "off",
     "prettier/prettier": "warn",
-    "no-console": "warn"
+    "no-console": ["warn", { allow: ["info", "error"] }]
   }
 };
