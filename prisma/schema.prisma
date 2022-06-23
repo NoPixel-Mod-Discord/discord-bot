@@ -1,0 +1,14 @@
+datasource db {
+  provider = "mysql"
+  url      = "mysql://root:Gs5zbPjxB1C9GIthC8@localhost:3307/hasroot"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Streamer {
+  id        Int         @id 
+  name      String
+  lastonline  DateTime?
+}

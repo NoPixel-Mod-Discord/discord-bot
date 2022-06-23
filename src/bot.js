@@ -43,38 +43,24 @@ client.login(process.env.DISCORD_BOT_TOKEN);
 const tmi = require("tmi.js");
 const twitchFunctions = require(`./functions/twitch.js`);
 const botconfig = require("./botconfig.json");
+const hasroot = require('./functions/hasroot.js')
 
+let channelNames = [];
 
-let channelNames = [ 
-  "natty",
-  "notnattybtw",
-  "uhSnow",
-  "Ray__C",
-  "GTAWiseGuy",
-  "Wolfabelle",
-  "Deansocool",
-  "Timmac",
-  "kyliebitkin",
-  "Pezz",
-  "LAGTVMaximusBlack",
-  "iddqd",
-  "Simo",
-  "Raided",
-  "CydRose",
-  "Farmhouse78",
-  "Silent",
-  "Wiked",
-  "CathFawr",
-  "Moboking",
-  "ChrisTombstone",
-  "Myles_Away"
-]
+async function getStreamers () {
+  channels = await hasroot.getActiveStreamers(100); // get streamers who have streamed GTA in the last 100 days
+  channels.forEach(channel => {
+    channelNames.push(channel.name)
+  });
+}
+
+getStreamers();
 
 //Define TMI config options
 const options = {
     options: {
         clientId: process.env.CLIENT_ID,
-        debug: true,
+        debug: false,
     },
     connection: {
         cluster: "aws",
