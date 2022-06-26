@@ -45,7 +45,7 @@ module.exports = {
     const venue = interaction.options.getString("venue");
     const user = interaction.options.getString("user");
     const streamer = interaction.options.getString("streamer");
-    const moderator = interaction.user.id;
+    const moderator = interaction.user.tag;
     const reason = interaction.options.getString("reason");
     const evidence = interaction.options.getString("evidence");
 
