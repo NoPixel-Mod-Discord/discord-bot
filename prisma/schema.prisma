@@ -31,10 +31,9 @@ model Alts {
 
 model Streamer {
   id            Int       @id @default(autoincrement())
-  userId        String
-  createdAt     DateTime
-  verified      Boolean
-  channelId     String
+  userId        String    @unique
+  lastOnline    DateTime
+  channelId     String    @unique
   streamType    Venue
   mods          Mods[]
 }
@@ -46,16 +45,7 @@ model Mods {
   verified      Boolean
   channelId     String
   modType       Venue
-  streamerId    Streamer  @relation(fields: [userId], references: [channelId])
-}
-
-model Channel {
-  id            Int       @id @default(autoincrement())
-  streamerId    String
-  createdAt     DateTime
-  verified      Boolean
-  channelId     String?
-  channelType   Venue
+  streamerId    Streamer  @relation(fields: [channelId], references: [userId])
 }
 
 model Ban {
@@ -66,7 +56,7 @@ model Ban {
   isBanned     Boolean    @default(true)   
   channelId    String       
   moderatorId  String
-  reason       String
+  reason       String     @db.Text
 }
 
 enum Venue {

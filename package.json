@@ -1,45 +1,47 @@
 {
   "name": "discord-bot",
-  "description": "No-Pixel Mods Discord bot for mod/streamer verification and manual/automatic ban logging.",
   "version": "1.0.0",
-  "main": "index.js",
-  "repository": "git@github.com:NoPixel-Mod-Discord/discord-bot.git",
-  "author": "NoPixel-Mod-Discord",
-  "license": "MIT",
   "private": true,
+  "description": "No-Pixel Mods Discord bot for mod/streamer verification and manual/automatic ban logging.",
+  "repository": "git@github.com:NoPixel-Mod-Discord/discord-bot.git",
+  "license": "MIT",
+  "author": "NoPixel-Mod-Discord",
+  "main": "index.js",
   "scripts": {
-    "dev": "nodemon src/index.js",
+    "check": "npm run check-format && npm run check-lint",
     "check-format": "prettier --check .",
     "check-lint": "eslint . --ext js",
+    "dev": "nodemon src/index.js",
+    "fix": "npm run format && npm run lint",
     "format": "prettier --write .",
     "lint": "eslint . --ext js --fix",
-    "check": "npm run check-format && npm run check-lint",
-    "fix": "npm run format && npm run lint",
-    "start": "node src/index.js",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "start": "NODE_ENV=production node src/index.js"
   },
-  "devDependencies": {
-    "eslint": "^8.18.0",
-    "eslint-config-google": "^0.14.0",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-prettier": "^4.0.0",
-    "husky": "^8.0.0",
-    "lint-staged": "^13.0.2",
-    "nodemon": "^2.0.16",
-    "prettier": "^2.7.1",
-    "prisma": "^3.15.2"
+  "lint-staged": {
+    "*.js": "eslint --fix && prettier --write"
   },
   "dependencies": {
     "@discordjs/builders": "^0.15.0",
     "@discordjs/rest": "^0.5.0",
     "@prisma/client": "3.15.2",
     "axios": "^0.27.2",
-    "discord-api-types": "^0.34.0",
-    "discord.js": "^13.8.0",
+    "discord-api-types": "^0.35.0",
+    "discord.js": "^13.8.1",
     "dotenv": "^16.0.1",
+    "node-html-parser": "^5.3.3",
     "tmi.js": "^1.8.5"
   },
-  "lint-staged": {
-    "*.js": "eslint --fix && prettier --write"
-  }
+  "devDependencies": {
+    "eslint": "^8.18.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.3",
+    "nodemon": "^2.0.18",
+    "prettier": "^2.7.1",
+    "prisma": "^3.15.2"
+  },
+  "packageManager": "pnpm@7.2.1"
 }

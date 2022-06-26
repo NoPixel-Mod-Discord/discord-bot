@@ -33,9 +33,9 @@ module.exports = {
     // Deploy Commands
     try {
       if (process.env.NODE_ENV === "production") {
-        await rest.api
-          .put(Routes.applicationGuildCommands(clientId), {
-            data: commands
+        await rest
+          .put(Routes.applicationCommands(clientId), {
+            body: commands
           })
           .then(() => {
             console.info("Commands Successfully Set");

@@ -9,7 +9,9 @@ require("dotenv").config();
 const token = process.env.DISCORD_BOT_TOKEN;
 
 // Client
-const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
+const client = new Client({
+  intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES]
+});
 
 // Events
 const eventsPath = path.join(__dirname, "events");
@@ -44,3 +46,7 @@ module.exports = client;
 
 // Client Login
 client.login(token);
+
+const addStreamersFromHasroot = require("./lib/hashroot");
+
+addStreamersFromHasroot();

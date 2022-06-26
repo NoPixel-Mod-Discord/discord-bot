@@ -35,22 +35,54 @@ module.exports = {
           { name: "Facebook", value: "facebook" },
           { name: "Discord", value: "discord" }
         );
+    })
+    .addStringOption(evidence => {
+      return evidence
+        .setName("evidence")
+        .setDescription("Evidence for the ban");
     }),
   async execute(interaction) {
     await interaction.deferReply();
 
-    await prisma.ban.create({
-      data: {
-        banTime: new Date(),
-        banVenue: interaction.options.getString("venue"),
-        userId: await getUserId(interaction.options.getString("user")),
-        channelId: interaction.options.getString("streamer"),
-        moderatorId: interaction.user.id,
-        reason: interaction.options.getString("reason")
-      }
-    });
+    if (interaction.options.getString("venue") === "twitch") {
+      await prisma.ban
+        .create({
+          data: {
+            banTime: new Date(),
+            banVenue: interaction.options.getString("venue"),
+            userId: await getUserId(interaction.options.getString("user")),
+            channelId: await getUserId(
+              interaction.options.getString("streamer")
+            ),
+            moderatorId: interaction.user.id,
+            reason: interaction.options.getString("reason")
+          }
+        })
+        .catch(err => console.error(err))
+        .finally(async () => {
+          await prisma.$disconnect();
+        });
+    } else {
+      await prisma.ban
+        .create({
+          data: {
+            banTime: new Date(),
+            banVenue: interaction.options.getString("venue"),
+            userId: interaction.options.getString("user"),
+            channelId: interaction.options.getString("streamer"),
+            moderatorId: interaction.user.id,
+            reason: interaction.options.getString("reason")
+          }
+        })
+        .catch(err => console.error(err))
+        .finally(async () => {
+          await prisma.$disconnect();
+        });
+    }
     await interaction.editReply({
-      content: `Logged ban for ${interaction.options.getString("user")}`
+      content: `Logged ban for ${interaction.options.getString(
+        "user"
+      )} Evidence ${interaction.options.getString("evidence")}`
     });
   }
 };
