@@ -43,7 +43,6 @@ module.exports = {
             await client.$disconnect();
           });
 
-        console.log(response);
         if (response.length === 0) {
           await interaction.editReply({
             content: `No bans found for ${await getUserName(
@@ -51,9 +50,9 @@ module.exports = {
             )}`
           });
         } else {
-          response.forEach(async ban => {
+          response.map(async ban => {
             const user = await getUserName(ban.userId);
-            const streamer = await getUserName(ban.channelId);
+            const streamer = await getUserName(ban.streamerId);
             await interaction.editReply({
               content: `${ban.moderatorId} banned ${user} from ${streamer}'chat for ${ban.reason} ${ban.evidence}`
             });
@@ -80,7 +79,7 @@ module.exports = {
         } else {
           response.forEach(async ban => {
             await interaction.editReply({
-              content: `${ban.moderatorId} banned ${ban.userId} from ${ban.channelId} for ${ban.reason} ${ban.evidence}`
+              content: `${ban.moderatorId} banned ${ban.userId} from ${ban.streamerId} for ${ban.reason} ${ban.evidence}`
             });
           });
         }
