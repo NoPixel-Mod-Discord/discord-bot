@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
-const { prisma } = require("../prisma");
+const { client } = require("../lib/prisma/index");
 const getUserName = require("../lib/twitch/getUserName");
 
 module.exports = {
@@ -26,46 +26,49 @@ module.exports = {
     }),
   async execute(interaction) {
     await interaction.deferReply();
+
+    const user = interaction.options.getString("user");
+    const venue = interaction.options.getString("venue");
+
     try {
-      if (interaction.options.getString("venue") === "twitch") {
-        const response = await prisma.ban
+      if (venue === "twitch") {
+        const response = await client.bans
           .findMany({
             where: {
-              userId: interaction.options.getString("user"),
-              banVenue: interaction.options.getString("venue")
+              userId: user
             }
           })
           .catch(err => console.error(err))
           .finally(async () => {
-            await prisma.$disconnect();
+            await client.$disconnect();
           });
 
+        console.log(response);
         if (response.length === 0) {
           await interaction.editReply({
-            content: `No bans found for ${interaction.options.getString(
-              "user"
+            content: `No bans found for ${await getUserName(
+              interaction.options.getString("user")
             )}`
           });
         } else {
-          for (const ban of response) {
-            const userName = await getUserName(ban.userId);
-            const streamerName = await getUserName(ban.channelId);
+          response.forEach(async ban => {
+            const user = await getUserName(ban.userId);
+            const streamer = await getUserName(ban.channelId);
             await interaction.editReply({
-              content: `${ban.moderatorId} banned ${userName} from ${streamerName} for ${ban.reason}`
+              content: `${ban.moderatorId} banned ${user} from ${streamer}'chat for ${ban.reason} ${ban.evidence}`
             });
-          }
+          });
         }
       } else {
-        const response = await prisma.ban
+        const response = await client.bans
           .findMany({
             where: {
-              userId: interaction.options.getString("user"),
-              banVenue: interaction.options.getString("venue")
+              userId: user
             }
           })
           .catch(err => console.error(err))
           .finally(async () => {
-            await prisma.$disconnect();
+            await client.$disconnect();
           });
 
         if (response.length === 0) {
@@ -75,11 +78,11 @@ module.exports = {
             )}`
           });
         } else {
-          for (const ban of response) {
+          response.forEach(async ban => {
             await interaction.editReply({
-              content: `${ban.moderatorId} banned ${ban.userId} from ${ban.channelId} for ${ban.reason}`
+              content: `${ban.moderatorId} banned ${ban.userId} from ${ban.channelId} for ${ban.reason} ${ban.evidence}`
             });
-          }
+          });
         }
       }
     } catch (err) {

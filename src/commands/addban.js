@@ -1,6 +1,5 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
-const { prisma } = require("../prisma");
-const getUserId = require("../lib/twitch/getUserId");
+const { logBanTwitch, logBan } = require("../lib/prisma/logBans");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -43,46 +42,20 @@ module.exports = {
     }),
   async execute(interaction) {
     await interaction.deferReply();
+    const venue = interaction.options.getString("venue");
+    const user = interaction.options.getString("user");
+    const streamer = interaction.options.getString("streamer");
+    const moderator = interaction.user.id;
+    const reason = interaction.options.getString("reason");
+    const evidence = interaction.options.getString("evidence");
 
-    if (interaction.options.getString("venue") === "twitch") {
-      await prisma.ban
-        .create({
-          data: {
-            banTime: new Date(),
-            banVenue: interaction.options.getString("venue"),
-            userId: await getUserId(interaction.options.getString("user")),
-            channelId: await getUserId(
-              interaction.options.getString("streamer")
-            ),
-            moderatorId: interaction.user.id,
-            reason: interaction.options.getString("reason")
-          }
-        })
-        .catch(err => console.error(err))
-        .finally(async () => {
-          await prisma.$disconnect();
-        });
+    if (venue === "twitch") {
+      await logBanTwitch(venue, user, streamer, moderator, reason, evidence);
     } else {
-      await prisma.ban
-        .create({
-          data: {
-            banTime: new Date(),
-            banVenue: interaction.options.getString("venue"),
-            userId: interaction.options.getString("user"),
-            channelId: interaction.options.getString("streamer"),
-            moderatorId: interaction.user.id,
-            reason: interaction.options.getString("reason")
-          }
-        })
-        .catch(err => console.error(err))
-        .finally(async () => {
-          await prisma.$disconnect();
-        });
+      await logBan(venue, user, streamer, moderator, reason, evidence);
     }
     await interaction.editReply({
-      content: `Logged ban for ${interaction.options.getString(
-        "user"
-      )} Evidence ${interaction.options.getString("evidence")}`
+      content: `${user} is banned in ${streamer}'chat for ${reason} ${evidence}.`
     });
   }
 };

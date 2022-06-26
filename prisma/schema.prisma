@@ -1,67 +1,88 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
   previewFeatures = ["referentialIntegrity"]
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider             = "mysql"
+  url                  = env("DATABASE_URL")
   referentialIntegrity = "prisma"
 }
 
-model User {
-  id            Int       @id @default(autoincrement())
-  userId        String    @unique
-  venue         Venue
-  createdAt     DateTime
-  updatedAt     DateTime
-  alts          Alts[]
-}
-
 model Alts {
-  id            Int       @id @default(autoincrement())
-  altVenue      Venue
-  altId         String
-  userId        User     @relation(fields: [altId], references: [userId])
-
-}
-
-model Streamer {
-  id            Int       @id @default(autoincrement())
-  userId        String    @unique
-  lastOnline    DateTime
-  channelId     String    @unique
-  streamType    Venue
-  mods          Mods[]
+  id       Int           @id @default(autoincrement()) @db.UnsignedInt
+  altVenue Alts_altVenue
+  altId    String        @db.VarChar(255)
+  userId   String        @db.VarChar(255)
 }
 
 model Mods {
-  id            Int       @id @default(autoincrement())
-  userId        String
-  createdAt     DateTime
-  verified      Boolean
-  channelId     String
-  modType       Venue
-  streamerId    Streamer  @relation(fields: [channelId], references: [userId])
+  id         Int          @id @default(autoincrement()) @db.UnsignedInt
+  userId     String       @db.VarChar(255)
+  createdAt  DateTime     @db.DateTime(0)
+  isVerified Boolean
+  modType    Mods_modType
 }
 
-model Ban {
-  id           Int        @id @default(autoincrement())
-  banTime      DateTime   @default(now())
-  banVenue     Venue      
-  userId       String
-  isBanned     Boolean    @default(true)   
-  channelId    String       
-  moderatorId  String
-  reason       String     @db.Text
+model Bans {
+  id          Int           @id @default(autoincrement()) @db.UnsignedInt
+  banTime     DateTime      @db.DateTime(0)
+  banVenue    Bans_banVenue
+  userId      String        @db.VarChar(255)
+  isBanned    Boolean
+  streamerId  String        @db.VarChar(255)
+  moderatorId String        @db.VarChar(255)
+  reason      String        @db.VarChar(255)
+  evidence    String        @db.VarChar(255)
 }
 
-enum Venue {
+model Streamers {
+  id         Int                  @id @default(autoincrement()) @db.UnsignedInt
+  userId     String               @db.VarChar(255)
+  lastOnline DateTime             @db.DateTime(0)
+  channelId  String               @db.VarChar(255)
+  streamType Streamers_streamType
+}
+
+model Users {
+  id        Int         @id @default(autoincrement()) @db.UnsignedInt
+  userId    String      @unique(map: "users_userid_unique") @db.VarChar(255)
+  venue     Users_venue
+  createdAt DateTime    @db.DateTime(0)
+  updatedAt DateTime    @db.DateTime(0)
+}
+
+enum Alts_altVenue {
   twitch
-  youtube
   facebook
+  youtube
+  discord
+}
+
+enum Bans_banVenue {
+  twitch
+  facebook
+  youtube
+  discord
+}
+
+enum Mods_modType {
+  twitch
+  facebook
+  youtube
+  discord
+}
+
+enum Streamers_streamType {
+  twitch
+  facebook
+  youtube
+  discord
+}
+
+enum Users_venue {
+  twitch
+  facebook
+  youtube
   discord
 }

@@ -25,11 +25,13 @@ for (const file of eventsFiles) {
 
   if (event.once) {
     client.once(event.name, (...args) => event.execute(...args));
+  } else {
+    client.on(event.name, (...args) => event.execute(...args));
   }
-  client.on(event.name, (...args) => event.execute(...args));
 }
 
 // Commands
+const commands = [];
 client.commands = new Collection();
 const commandsPath = path.join(__dirname, "commands");
 const commandsFiles = fs
@@ -39,6 +41,7 @@ const commandsFiles = fs
 for (const file of commandsFiles) {
   const filePath = path.join(commandsPath, file);
   const command = require(filePath);
+  commands.push(command.data.toJSON());
   client.commands.set(command.data.name, command);
 }
 
@@ -47,6 +50,6 @@ module.exports = client;
 // Client Login
 client.login(token);
 
-const addStreamersFromHasroot = require("./lib/hashroot");
+// const addStreamersFromHasroot = require("./lib/hashroot");
 
-addStreamersFromHasroot();
+// addStreamersFromHasroot();
