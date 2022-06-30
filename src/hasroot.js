@@ -50,6 +50,10 @@ module.exports = client;
 // Client Login
 client.login(token);
 
-// const addStreamersFromHasroot = require("./lib/hasroot");
+const addStreamersFromHasroot = require("./lib/hasroot");
+addStreamersFromHasroot();
 
-// addStreamersFromHasroot();
+console.log(2);
+
+const getChannelMods = require("./lib/twitch/getChannelMods");
+getChannelMods();
