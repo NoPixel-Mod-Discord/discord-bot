@@ -9,78 +9,62 @@ datasource db {
   referentialIntegrity = "prisma"
 }
 
-model Alts {
-  id       Int           @id @default(autoincrement()) @db.UnsignedInt
-  altVenue Alts_altVenue
-  altId    String        @db.VarChar(255)
-  userId   String        @db.VarChar(255)
+model User {
+  id              Int         @id @default(autoincrement()) @db.UnsignedInt
+  userId          String      @unique(map: "users_userid_unique") 
+  platform           Platform
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  alts            Alt[]
 }
 
-model Mods {
-  id         Int          @id @default(autoincrement()) @db.UnsignedInt
-  userId     String       @db.VarChar(255)
-  createdAt  DateTime     @db.DateTime(0)
-  isVerified Boolean
-  modType    Mods_modType
+model Alt {
+  id             Int         @id @default(autoincrement()) @db.UnsignedInt
+  altPlatfrom    Platform
+  altId          String      @unique
+  userId         String        
+  user           User        @relation(fields: [userId], references: [userId])
+
+  @@map("alts")
 }
 
-model Bans {
-  id          Int           @id @default(autoincrement()) @db.UnsignedInt
-  banTime     DateTime      @db.DateTime(0)
-  banVenue    Bans_banVenue
-  userId      String        @db.VarChar(255)
-  isBanned    Boolean
-  streamerId  String        @db.VarChar(255)
-  moderatorId String        @db.VarChar(255)
-  reason      String        @db.VarChar(255)
-  evidence    String        @db.VarChar(255)
+model Mod {
+  id            Int          @id @default(autoincrement()) @db.UnsignedInt
+  userDiscordId String       @unique
+  userId        String       @unique
+  createdAt     DateTime     @default(now())
+  isVerified    Boolean      @default(true)
+  modType       Platform
+
+  @@map("mods")
 }
 
-model Streamers {
-  id         Int                  @id @default(autoincrement()) @db.UnsignedInt
-  userId     String               @db.VarChar(255)
-  lastOnline DateTime             @db.DateTime(0)
-  channelId  String               @db.VarChar(255)
-  streamType Streamers_streamType
+model Streamer {
+  id           Int           @id @default(autoincrement()) @db.UnsignedInt
+  userId       String        @unique
+  lastOnline   DateTime      
+  streamType   Platform
+  createdAt    DateTime       @default(now())
+
+  @@map("streamers")
 }
 
-model Users {
-  id        Int         @id @default(autoincrement()) @db.UnsignedInt
-  userId    String      @unique(map: "users_userid_unique") @db.VarChar(255)
-  venue     Users_venue
-  createdAt DateTime    @db.DateTime(0)
-  updatedAt DateTime    @db.DateTime(0)
+model Ban {
+  id           Int           @id @default(autoincrement()) @db.UnsignedInt
+  bannedAt     DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  banPlatform  Platform
+  userId       String        
+  isBanned     Boolean       @default(true)
+  streamerId   String        
+  moderatorId  String        
+  reason       String        
+  evidence     String?       
+
+  @@map("bans")
 }
 
-enum Alts_altVenue {
-  twitch
-  facebook
-  youtube
-  discord
-}
-
-enum Bans_banVenue {
-  twitch
-  facebook
-  youtube
-  discord
-}
-
-enum Mods_modType {
-  twitch
-  facebook
-  youtube
-  discord
-}
-
-enum Streamers_streamType {
-  twitch
-  facebook
-  youtube
-  discord
-}
-
-enum Users_venue {
+enum Platform {
   twitch
   facebook
   youtube

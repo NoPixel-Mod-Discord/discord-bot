@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require("@discordjs/builders");
+const { SlashCommandBuilder } = require("discord.js");
 const { client } = require("../lib/prisma/index");
 const getUserName = require("../lib/twitch/getUserName");
 
@@ -12,10 +12,10 @@ module.exports = {
         .setDescription("Search for banned user")
         .setRequired(true);
     })
-    .addStringOption(venue => {
-      return venue
-        .setName("venue")
-        .setDescription("The venue the ban was issued in")
+    .addStringOption(platform => {
+      return platform
+        .setName("platform")
+        .setDescription("The platform the ban was issued in")
         .setRequired(true)
         .addChoices(
           { name: "Twitch", value: "twitch" },
@@ -28,11 +28,11 @@ module.exports = {
     await interaction.deferReply();
 
     const user = interaction.options.getString("user");
-    const venue = interaction.options.getString("venue");
+    const platform = interaction.options.getString("platform");
 
     try {
-      if (venue === "twitch") {
-        const response = await client.bans
+      if (platform === "twitch") {
+        const response = await client.ban
           .findMany({
             where: {
               userId: user
@@ -53,13 +53,13 @@ module.exports = {
           response.map(async ban => {
             const user = await getUserName(ban.userId);
             const streamer = await getUserName(ban.streamerId);
-            await interaction.editReply({
+            await interaction.reply({
               content: `${ban.moderatorId} banned ${user} from ${streamer}'chat for ${ban.reason} ${ban.evidence}`
             });
           });
         }
       } else {
-        const response = await client.bans
+        const response = await client.ban
           .findMany({
             where: {
               userId: user

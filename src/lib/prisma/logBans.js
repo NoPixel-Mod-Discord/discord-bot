@@ -2,23 +2,21 @@ const { client } = require("./index");
 const getUserId = require("../twitch/getUserId");
 
 const logBanTwitch = async (
-  venue,
-  userId,
+  platform,
+  userName,
   streamerId,
   moderatorId,
   reason,
   evidence
 ) => {
-  const userID = await getUserId(userId);
+  const userID = await getUserId(userName);
   const streamerID = await getUserId(streamerId);
 
-  await client.bans
+  await client.ban
     .create({
       data: {
-        banTime: new Date(),
-        banVenue: venue,
+        banPlatform: platform,
         userId: userID,
-        isBanned: true,
         streamerId: streamerID,
         moderatorId: moderatorId,
         reason,
@@ -32,18 +30,17 @@ const logBanTwitch = async (
 };
 
 const logBan = async (
-  venue,
+  platform,
   userId,
   streamerId,
   moderatorId,
   reason,
   evidence
 ) => {
-  await prisma.ban
+  await client.ban
     .create({
       data: {
-        banTime: new Date(),
-        banVenue: venue,
+        banPlatform: platform,
         userId,
         streamerId,
         moderatorId,
@@ -53,7 +50,7 @@ const logBan = async (
     })
     .catch(err => console.error(err))
     .finally(async () => {
-      await prisma.$disconnect();
+      await client.$disconnect();
     });
 };
 
@@ -61,5 +58,3 @@ module.exports = {
   logBanTwitch,
   logBan
 };
-
-// moderatorId: await getUserId(moderatorId)

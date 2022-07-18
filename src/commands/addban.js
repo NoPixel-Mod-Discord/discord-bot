@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require("@discordjs/builders");
+const { SlashCommandBuilder } = require("discord.js");
 const { logBanTwitch, logBan } = require("../lib/prisma/logBans");
 
 module.exports = {
@@ -23,10 +23,10 @@ module.exports = {
         .setDescription("The reason for the ban")
         .setRequired(true);
     })
-    .addStringOption(venue => {
-      return venue
-        .setName("venue")
-        .setDescription("The venue the ban was issued in")
+    .addStringOption(platform => {
+      return platform
+        .setName("platform")
+        .setDescription("The platform the ban was issued in")
         .setRequired(true)
         .addChoices(
           { name: "Twitch", value: "twitch" },
@@ -42,17 +42,17 @@ module.exports = {
     }),
   async execute(interaction) {
     await interaction.deferReply();
-    const venue = interaction.options.getString("venue");
+    const platform = interaction.options.getString("platform");
     const user = interaction.options.getString("user");
     const streamer = interaction.options.getString("streamer");
     const moderator = interaction.user.tag;
     const reason = interaction.options.getString("reason");
     const evidence = interaction.options.getString("evidence");
 
-    if (venue === "twitch") {
-      await logBanTwitch(venue, user, streamer, moderator, reason, evidence);
+    if (platform === "twitch") {
+      await logBanTwitch(platform, user, streamer, moderator, reason, evidence);
     } else {
-      await logBan(venue, user, streamer, moderator, reason, evidence);
+      await logBan(platform, user, streamer, moderator, reason, evidence);
     }
     await interaction.editReply({
       content: `${user} is banned in ${streamer}'chat for ${reason} ${evidence}.`

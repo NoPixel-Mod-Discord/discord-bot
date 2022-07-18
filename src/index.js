@@ -1,7 +1,7 @@
 // Package Imports
 const fs = require("fs");
 const path = require("path");
-const { Client, Intents, Collection } = require("discord.js");
+const { Client, GatewayIntentBits, Collection } = require("discord.js");
 
 require("dotenv").config();
 
@@ -10,7 +10,7 @@ const token = process.env.DISCORD_BOT_TOKEN;
 
 // Client
 const client = new Client({
-  intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES]
+  intents: [GatewayIntentBits.Guilds]
 });
 
 // Events
@@ -42,7 +42,8 @@ for (const file of commandsFiles) {
   const filePath = path.join(commandsPath, file);
   const command = require(filePath);
   commands.push(command.data.toJSON());
-  client.commands.set(command.data.name, command);
+  client.application?.commands.set(command.data.name, command);
+  console.log("Commands added successfully!");
 }
 
 module.exports = client;
