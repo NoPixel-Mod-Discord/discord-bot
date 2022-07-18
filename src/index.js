@@ -1,5 +1,5 @@
-const test = () => {
-  console.log("test");
-};
+// Run the API express server for bot and front-end
+require("./server");
 
-test();
+// Run the discord bot
+require("./bot");
