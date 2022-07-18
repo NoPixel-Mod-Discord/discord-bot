@@ -3,13 +3,13 @@ lockfileVersion: 5.4
 specifiers:
   discord.js: ^14.0.1
   dotenv: ^16.0.1
-  eslint: ^8.18.0
+  eslint: ^8.20.0
   eslint-config-google: ^0.14.0
   eslint-config-prettier: ^8.5.0
-  eslint-plugin-prettier: ^4.0.0
-  husky: ^8.0.0
-  lint-staged: ^13.0.2
-  nodemon: ^2.0.16
+  eslint-plugin-prettier: ^4.2.1
+  husky: ^8.0.1
+  lint-staged: ^13.0.3
+  nodemon: ^2.0.19
   prettier: ^2.7.1
   tmi.js: ^1.8.5
 
