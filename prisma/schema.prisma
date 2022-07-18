@@ -52,7 +52,7 @@ model Streamer {
 model Ban {
   id           Int           @id @default(autoincrement()) @db.UnsignedInt
   bannedAt     DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
+  updatedAt    DateTime?     @updatedAt
   banPlatform  Platform
   userId       String        
   isBanned     Boolean       @default(true)

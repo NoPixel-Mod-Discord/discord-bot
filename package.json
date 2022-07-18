@@ -15,7 +15,7 @@
     "lint": "eslint . --ext js --fix",
     "check": "npm run check-format && npm run check-lint",
     "fix": "npm run format && npm run lint",
-    "start": "node src/index.js",
+    "start": "NODE_ENV=production node src/index.js",
     "prepare": "husky install"
   },
   "devDependencies": {
