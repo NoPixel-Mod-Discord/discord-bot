@@ -1,7 +1,7 @@
 const ReturnValue = require("../utils/models");
 const express = require("express");
 const checkAPIKey = require("../middleware");
-const prismaClient = require("../libs/prisma");
+const { prismaClient } = require("../libs/prisma");
 
 // eslint-disable-next-line new-cap
 const router = express.Router();
@@ -9,23 +9,18 @@ const router = express.Router();
 router.post("/", checkAPIKey, async (req, res) => {
   const retVal = new ReturnValue();
 
-  const { platform, user, streamer, moderator, reason, evidence } = req.body;
+  const { moderatorId } = req.body;
 
   try {
-    const response = await prismaClient.ban.create({
-      data: {
-        bannedAt: new Date(),
-        banPlatform: platform,
-        userId: user,
-        isBanned: true,
-        streamerId: streamer,
-        moderatorId: moderator,
-        reason,
-        evidence
-      }
-    });
+    const response = await prismaClient.mod
+      .findUnique({
+        where: {
+          userDiscordId: moderatorId
+        }
+      })
+      .finally(async () => await prismaClient.$disconnect());
 
-    retVal.body = response;
+    retVal.body = response.userId;
   } catch (error) {
     console.error(error);
     retVal.status = 500;

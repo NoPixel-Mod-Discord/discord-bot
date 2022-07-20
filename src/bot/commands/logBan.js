@@ -10,6 +10,10 @@ if (process.env.NODE_ENV === "production") {
   API_URL = "http://localhost:3333";
 }
 
+/** Todo
+ * Verify moderator status
+ */
+
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("logban")
@@ -54,13 +58,26 @@ module.exports = {
     const platform = interaction.options.getString("platform");
     const user = interaction.options.getString("user");
     const streamer = interaction.options.getString("streamer");
-    const moderator = interaction.user.tag;
     const reason = interaction.options.getString("reason");
     const evidence = interaction.options.getString("evidence");
 
+    // Get modrator's Twitch id from database
+    const { data: moderator } = await post(
+      `${API_URL}/get-moderator-id`,
+      {
+        moderatorId: interaction.user.id
+      },
+      {
+        headers: {
+          "x-api-key": process.env.SERVER_API_KEY
+        }
+      }
+    );
+
+    // Add ban to database
     try {
       await post(
-        `${API_URL}/ban`,
+        `${API_URL}/add-ban`,
         {
           platform,
           user,

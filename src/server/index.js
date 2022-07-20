@@ -2,7 +2,8 @@ const express = require("express");
 require("dotenv").config();
 
 // API Routes
-const banRoute = require("./routes/ban");
+const addBan = require("./routes/addBan");
+const moderatorRoute = require("./routes/getModeratorId");
 
 // Initialize Express Client
 const app = express();
@@ -19,7 +20,8 @@ app.get("/ping", (req, res) => {
 });
 
 // API Routes
-app.use("/ban", banRoute);
+app.use("/add-ban", addBan);
+app.use("/get-moderator-id", moderatorRoute);
 
 app.listen(PORT, () =>
   console.info(`🚀 Server ready at: http://localhost:${PORT}`)

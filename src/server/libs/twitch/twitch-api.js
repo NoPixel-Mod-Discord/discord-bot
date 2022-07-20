@@ -8,9 +8,9 @@ const getUserId = async userName => {
 
   try {
     const response = await get(URL, {
-      Headers: {
+      headers: {
         "Client-ID": process.env.TWITCH_CLIENT_ID,
-        Authorization: `Bearer ${process.env.TWITCH_TOKEN}`
+        Authorization: `Bearer ${process.env.TWITCH_OAUTH_TOKEN}`
       }
     });
 
@@ -27,9 +27,9 @@ const getUserName = async userId => {
 
   try {
     const response = await get(URL, {
-      Headers: {
+      headers: {
         "Client-ID": process.env.TWITCH_CLIENT_ID,
-        Authorization: `Bearer ${process.env.TWITCH_TOKEN}`
+        Authorization: `Bearer ${process.env.TWITCH_OAUTH_TOKEN}`
       }
     });
 
