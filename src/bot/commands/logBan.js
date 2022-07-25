@@ -76,7 +76,7 @@ module.exports = {
 
     // Add ban to database
     try {
-      await post(
+      const { data } = await post(
         `${API_URL}/add-ban`,
         {
           platform,
@@ -93,9 +93,15 @@ module.exports = {
         }
       );
 
-      await interaction.editReply({
-        content: `${user} is banned in ${streamer}'chat for ${reason} ${evidence}.`
-      });
+      if (data.reason === reason) {
+        await interaction.editReply({
+          content: `${user} is banned in ${streamer}'chat for ${reason} ${evidence}.`
+        });
+      } else {
+        await interaction.editReply({
+          content: `${data}`
+        });
+      }
     } catch (error) {
       console.error(error);
     }

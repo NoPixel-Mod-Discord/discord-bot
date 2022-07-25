@@ -3,7 +3,8 @@ const express = require("express");
 const checkAPIKey = require("../middleware");
 const { prismaClient } = require("../libs/prisma");
 
-const { getUserId } = require("../libs/twitch/twitch-api");
+const { getUserId, getUserName } = require("../libs/twitch/twitch-api");
+const { checkUserIsMod } = require("../libs/twitch/tmi");
 
 // eslint-disable-next-line new-cap
 const router = express.Router();
@@ -14,25 +15,34 @@ router.post("/", checkAPIKey, async (req, res) => {
   const { platform, user, streamer, moderator, reason, evidence } = req.body;
 
   if (platform === "twitch") {
-    try {
-      const response = await prismaClient.ban
-        .create({
-          data: {
-            bannedAt: new Date(),
-            banPlatform: platform,
-            userId: await getUserId(user),
-            isBanned: true,
-            streamerId: await getUserId(streamer),
-            moderatorId: moderator,
-            reason,
-            evidence
-          }
-        })
-        .finally(async () => {
-          await prismaClient.$disconnect();
-        });
+    const modUserName = await getUserName(moderator);
 
-      retVal.body = response;
+    const userIsMod = await checkUserIsMod(streamer);
+
+    try {
+      if (userIsMod.includes(modUserName) === true) {
+        const response = await prismaClient.ban
+          .create({
+            data: {
+              bannedAt: new Date(),
+              banPlatform: platform,
+              userId: await getUserId(user),
+              isBanned: true,
+              streamerId: await getUserId(streamer),
+              moderatorId: moderator,
+              reason,
+              evidence
+            }
+          })
+
+          .finally(async () => {
+            await prismaClient.$disconnect();
+          });
+
+        retVal.body = response;
+      } else {
+        retVal.body = `You are not a mod for ${streamer}`;
+      }
     } catch (error) {
       console.error(error);
       retVal.status = 500;
