@@ -93,9 +93,15 @@ module.exports = {
         }
       );
 
+      const response =
+        "`Ban Id:" +
+        data.id +
+        "`" +
+        `\n ${user} is banned in ${streamer}'chat for ${reason} ${evidence}.`;
+
       if (data.reason === reason) {
         await interaction.editReply({
-          content: `${user} is banned in ${streamer}'chat for ${reason} ${evidence}.`
+          content: response
         });
       } else {
         await interaction.editReply({
