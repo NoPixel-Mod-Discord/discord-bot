@@ -14,7 +14,9 @@ module.exports = {
     }),
   async execute(interaction) {
     await interaction.deferReply();
-    const streamer = interaction.options.getString("streamer");
+    let streamer = interaction.options.getString("streamer");
+
+    streamer = streamer.toLowerCase();
 
     const mods = await getChannelMods(streamer);
     return interaction.editReply({

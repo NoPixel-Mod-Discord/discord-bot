@@ -36,7 +36,9 @@ module.exports = {
   async execute(interaction) {
     await interaction.deferReply();
     const platform = interaction.options.getString("platform");
-    const user = interaction.options.getString("user");
+    let user = interaction.options.getString("user");
+
+    user = user.toLowerCase();
 
     try {
       const { data } = await post(
