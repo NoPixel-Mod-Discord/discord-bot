@@ -56,10 +56,13 @@ module.exports = {
   async execute(interaction) {
     await interaction.deferReply();
     const platform = interaction.options.getString("platform");
-    const user = interaction.options.getString("user");
+    let user = interaction.options.getString("user");
     const streamer = interaction.options.getString("streamer");
     const reason = interaction.options.getString("reason");
     const evidence = interaction.options.getString("evidence");
+
+    user = user.toLowerCase();
+    streamer = streamer.toLowerCase();
 
     // Get modrator's Twitch id from database
     const { data: moderator } = await post(
