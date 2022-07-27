@@ -57,7 +57,7 @@ module.exports = {
     await interaction.deferReply();
     const platform = interaction.options.getString("platform");
     let user = interaction.options.getString("user");
-    const streamer = interaction.options.getString("streamer");
+    let streamer = interaction.options.getString("streamer");
     const reason = interaction.options.getString("reason");
     const evidence = interaction.options.getString("evidence");
 
