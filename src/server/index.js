@@ -14,7 +14,7 @@ const PORT = process.env.SERVER_PORT || 8888;
 app.use(express.json());
 
 // Status Check
-app.get("/ping", (req, res) => {
+app.get("/", async (req, res) => {
   console.info("Server was pinged");
   res.status(200);
   res.send("Hello World");
