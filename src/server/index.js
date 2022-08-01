@@ -15,11 +15,7 @@ const PORT = process.env.SERVER_PORT || 3333;
 
 // Middlewares
 app.use(express.json());
-app.use(
-  cors({
-    origin: "https://nopixel-mod-discord.vercel.app"
-  })
-);
+app.use(cors());
 
 // Status Check
 app.get("/", async (req, res) => {
