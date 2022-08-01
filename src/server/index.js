@@ -17,7 +17,7 @@ const PORT = process.env.SERVER_PORT || 3333;
 app.use(express.json());
 app.use(
   cors({
-    origin: "https://nopixel-mod-discord.vercel.app/"
+    origin: "https://nopixel-mod-discord.vercel.app"
   })
 );
 
