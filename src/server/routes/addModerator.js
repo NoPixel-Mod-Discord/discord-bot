@@ -2,6 +2,7 @@ const ReturnValue = require("../utils/models");
 const express = require("express");
 const checkAPIKey = require("../middleware");
 const { prismaClient } = require("../libs/prisma");
+const { PrismaClientKnownRequestError } = require("@prisma/client/runtime");
 
 // const { checkUserIsMod } = require("../libs/twitch/tmi");
 
@@ -27,12 +28,18 @@ router.post("/", checkAPIKey, async (req, res) => {
       .finally(async () => {
         await prismaClient.$disconnect();
       });
-
     retVal.body = response;
   } catch (error) {
-    console.error(error);
-    retVal.status = 500;
-    retVal.body.err = "Something went wrong :(";
+    if (error instanceof PrismaClientKnownRequestError) {
+      if (error.code === "P2002") {
+        retVal.status = 500;
+        retVal.body.err =
+          "You are already in the database. Please stop spamming.";
+      }
+    } else {
+      retVal.status = 500;
+      retVal.body.err = "Something went wrong :(";
+    }
   } finally {
     res.status(retVal.status).json(retVal.body);
   }

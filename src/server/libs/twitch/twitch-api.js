@@ -25,9 +25,7 @@ const getUserId = async userName => {
 
     return id;
   } catch (error) {
-    console.error(error);
-
-    return error.data;
+    return error;
   }
 };
 
@@ -52,9 +50,7 @@ const getUserName = async userId => {
 
     return login;
   } catch (error) {
-    console.error(error);
-
-    return error.data;
+    return error;
   }
 };
 

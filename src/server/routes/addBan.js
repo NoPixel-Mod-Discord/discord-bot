@@ -5,6 +5,7 @@ const { prismaClient } = require("../libs/prisma");
 
 const { getUserId, getUserName } = require("../libs/twitch/twitch-api");
 const { checkUserIsMod } = require("../libs/twitch/tmi");
+const { PrismaClientValidationError } = require("@prisma/client/runtime");
 
 // eslint-disable-next-line new-cap
 const router = express.Router();
@@ -44,9 +45,14 @@ router.post("/", checkAPIKey, async (req, res) => {
         retVal.body = `You are not a mod for ${streamer}`;
       }
     } catch (error) {
-      console.error(error);
-      retVal.status = 500;
-      retVal.body.err = "Something went wrong :(";
+      if (error instanceof PrismaClientValidationError) {
+        retVal.status = 500;
+        retVal.body.err =
+          "Username is incorrect or does not exist in Twitch database.";
+      } else {
+        retVal.status = 500;
+        retVal.body.err = "Something went wrong :(";
+      }
     } finally {
       res.status(retVal.status).json(retVal.body);
     }
@@ -71,7 +77,6 @@ router.post("/", checkAPIKey, async (req, res) => {
 
       retVal.body = response;
     } catch (error) {
-      console.error(error);
       retVal.status = 500;
       retVal.body.err = "Something went wrong :(";
     } finally {

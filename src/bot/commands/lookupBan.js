@@ -3,13 +3,7 @@ require("dotenv").config();
 const { SlashCommandBuilder } = require("discord.js");
 const { getUserName } = require("../../server/libs/twitch/twitch-api");
 
-let API_URL;
-
-if (process.env.NODE_ENV === "production") {
-  API_URL = process.env.SERVER_URL;
-} else {
-  API_URL = "http://localhost:3333";
-}
+const API_URL = process.env.SERVER_URL;
 
 module.exports = {
   data: new SlashCommandBuilder()
