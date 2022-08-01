@@ -11,7 +11,8 @@ module.exports = {
   },
   plugins: ["prettier"],
   rules: {
+    "no-console": ["warn", { allow: ["info", "error"] }],
     "prettier/prettier": "warn",
-    "no-console": ["warn", { allow: ["info", "error"] }]
+    "require-jsdoc": "off"
   }
 };

@@ -15,7 +15,8 @@
     "lint": "eslint . --ext js --fix",
     "check": "npm run check-format && npm run check-lint",
     "fix": "npm run format && npm run lint",
-    "start": "node src/index.js",
+    "start:bot": "NODE_ENV=production node src/bot/index.js",
+    "start:server": "NODE_ENV=production node src/server/index.js",
     "prepare": "husky install"
   },
   "devDependencies": {
@@ -30,14 +31,16 @@
   },
   "dependencies": {
     "@discordjs/rest": "^1.0.0",
-    "@prisma/client": "^4.0.0",
+    "@jlengstorf/get-twitch-oauth": "^1.0.1",
+    "@prisma/client": "^4.1.0",
     "axios": "^0.27.2",
-    "discord.js": "^14.0.1",
+    "cors": "^2.8.5",
+    "discord.js": "^14.0.3",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "moment": "^2.29.4",
     "node-html-parser": "^5.3.3",
-    "prisma": "^4.0.0",
+    "prisma": "^4.1.0",
     "tmi.js": "^1.8.5"
   },
   "lint-staged": {

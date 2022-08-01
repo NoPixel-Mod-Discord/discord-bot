@@ -31,7 +31,6 @@ for (const file of commandsFiles) {
   commandsArray.push(command.data.toJSON());
   client.commands.set(command.data.name, command);
 }
-
 // Adds commads to bot on startup
 const rest = new REST({ version: "9" }).setToken(TOKEN);
 (async () => {
