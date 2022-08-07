@@ -15,8 +15,6 @@ module.exports = {
         .setRequired(true);
     }),
   async execute(interaction) {
-    await interaction.deferReply();
-
     let streamer = interaction.options.getString("streamer");
 
     streamer = streamer.toLowerCase();
@@ -43,7 +41,7 @@ module.exports = {
       }
 
       if (list.length < 0) {
-        return interaction.editReply({
+        return interaction.reply({
           content: "No mods found for Streamer"
         });
       }
