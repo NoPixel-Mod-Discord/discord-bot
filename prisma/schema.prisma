@@ -9,21 +9,11 @@ datasource db {
   referentialIntegrity = "prisma"
 }
 
-model User {
-  id              Int         @id @default(autoincrement()) @db.UnsignedInt
-  userId          String      @unique(map: "users_userid_unique") 
-  platform        Platform
-  createdAt       DateTime    @default(now())
-  updatedAt       DateTime    @updatedAt
-  alts            Alt[]
-}
-
 model Alt {
   id             Int         @id @default(autoincrement()) @db.UnsignedInt
   altPlatfrom    Platform
   altId          String      @unique
   userId         String        
-  user           User        @relation(fields: [userId], references: [userId])
 
   @@map("alts")
 }
@@ -31,7 +21,7 @@ model Alt {
 model Mod {
   id            Int          @id @default(autoincrement()) @db.UnsignedInt
   userDiscordId String       @unique
-  userId        String       
+  userId        String       @unique
   createdAt     DateTime     @default(now())
   isVerified    Boolean      @default(true)
   modType       Platform
@@ -54,7 +44,7 @@ model Ban {
   bannedAt     DateTime      @default(now())
   updatedAt    DateTime?     @updatedAt
   banPlatform  Platform
-  userId       String        
+  userId       String        @unique
   isBanned     Boolean       @default(true)
   streamerId   String        
   moderatorId  String        

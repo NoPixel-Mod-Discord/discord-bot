@@ -56,7 +56,7 @@ module.exports = {
 
     // Get modrator's Twitch id from database
     const { data: moderator } = await post(
-      `${API_URL}/get-moderator-id`,
+      `${API_URL}/api/v1/moderator/get-id`,
       {
         moderatorId: interaction.user.id
       },
@@ -70,7 +70,7 @@ module.exports = {
     // Add ban to database
     try {
       const { data } = await post(
-        `${API_URL}/add-ban`,
+        `${API_URL}/api/v1/ban/add`,
         {
           platform,
           user,

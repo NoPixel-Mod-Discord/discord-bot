@@ -36,7 +36,7 @@ module.exports = {
 
     try {
       const { data } = await post(
-        `${API_URL}/lookup-ban`,
+        `${API_URL}/api/v1/ban/lookup`,
         {
           platform,
           user

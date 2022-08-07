@@ -19,8 +19,11 @@ module.exports = {
     streamer = streamer.toLowerCase();
 
     const mods = await getChannelMods(streamer);
+
+    const data = "```" + mods.join("\n") + "```";
+
     return interaction.editReply({
-      content: mods
+      content: data
     });
   }
 };
