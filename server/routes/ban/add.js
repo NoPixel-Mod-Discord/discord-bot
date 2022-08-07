@@ -1,16 +1,11 @@
-const ReturnValue = require("../utils/models");
-const express = require("express");
-const checkAPIKey = require("../middleware");
-const { prismaClient } = require("../libs/prisma");
+const ReturnValue = require("../../utils/models");
+const { prismaClient } = require("../../libs/prisma");
 
-const { getUserId, getUserName } = require("../libs/twitch/twitch-api");
-const { checkUserIsMod } = require("../libs/twitch/tmi");
+const { getUserId, getUserName } = require("../../libs/twitch/twitch-api");
+const { checkUserIsMod } = require("../../libs/twitch/tmi");
 const { PrismaClientValidationError } = require("@prisma/client/runtime");
 
-// eslint-disable-next-line new-cap
-const router = express.Router();
-
-router.post("/", checkAPIKey, async (req, res) => {
+const addBan = async (req, res) => {
   const retVal = new ReturnValue();
 
   const { platform, user, streamer, moderator, reason, evidence } = req.body;
@@ -83,6 +78,6 @@ router.post("/", checkAPIKey, async (req, res) => {
       res.status(retVal.status).json(retVal.body);
     }
   }
-});
+};
 
-module.exports = router;
+module.exports = addBan;

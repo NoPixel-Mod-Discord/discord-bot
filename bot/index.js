@@ -58,3 +58,7 @@ for (const file of eventsFiles) {
 
 // Login to Discord with your client's token
 client.login(TOKEN);
+
+module.exports = {
+  discordClient: client
+};

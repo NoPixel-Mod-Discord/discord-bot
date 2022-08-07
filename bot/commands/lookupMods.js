@@ -4,7 +4,7 @@ const { getChannelMods } = require("../../server/libs/twitch/tmi");
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName("lookmods")
+    .setName("lookupmods")
     .setDescription("Look up mods for a streamer")
     .addStringOption(streamer => {
       return streamer
@@ -19,8 +19,11 @@ module.exports = {
     streamer = streamer.toLowerCase();
 
     const mods = await getChannelMods(streamer);
+
+    const data = "```" + mods.join("\n") + "```";
+
     return interaction.editReply({
-      content: mods
+      content: data
     });
   }
 };

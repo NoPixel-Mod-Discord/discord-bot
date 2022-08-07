@@ -17,7 +17,7 @@ tmiClient.connect().catch(err => console.error(err));
 const getChannelMods = async streamer => {
   const mods = await tmiClient
     .mods(streamer)
-    .then(res => "```" + res.join("\n") + "```")
+    .then(res => res)
     .catch(err => console.error(err));
 
   return mods;

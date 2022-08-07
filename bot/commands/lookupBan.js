@@ -7,7 +7,7 @@ const API_URL = process.env.SERVER_URL;
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName("banlookup")
+    .setName("lookupban")
     .setDescription("Look Up a ban")
     .addStringOption(user => {
       return user
@@ -36,7 +36,7 @@ module.exports = {
 
     try {
       const { data } = await post(
-        `${API_URL}/lookup-ban`,
+        `${API_URL}/api/v1/ban/lookup`,
         {
           platform,
           user
