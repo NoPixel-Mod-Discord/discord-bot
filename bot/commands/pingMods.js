@@ -15,6 +15,8 @@ module.exports = {
         .setRequired(true);
     }),
   async execute(interaction) {
+    await interaction.deferReply();
+
     let streamer = interaction.options.getString("streamer");
 
     streamer = streamer.toLowerCase();
@@ -46,9 +48,9 @@ module.exports = {
         });
       }
 
-      return interaction.channel.send(
-        `Pinged mod ${streamer} ${list.toString()}`
-      );
+      interaction.channel.send(` ${list.toString()}`);
+
+      return interaction.editReply(`Pinged mod ${streamer}`);
     } catch (error) {
       console.error(error);
     }
