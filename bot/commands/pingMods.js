@@ -42,9 +42,15 @@ module.exports = {
         list.push(user);
       }
 
-      return interaction.editReply({
-        content: list.toString()
-      });
+      if (list.length < 0) {
+        return interaction.editReply({
+          content: "No mods found for Streamer"
+        });
+      }
+
+      return interaction.channel.send(
+        `Pinged mod ${streamer} ${list.toString()}`
+      );
     } catch (error) {
       console.error(error);
     }
