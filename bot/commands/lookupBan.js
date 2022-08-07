@@ -7,7 +7,7 @@ const API_URL = process.env.SERVER_URL;
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName("banlookup")
+    .setName("lookupban")
     .setDescription("Look Up a ban")
     .addStringOption(user => {
       return user

@@ -6,8 +6,8 @@ const API_URL = process.env.SERVER_URL;
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName("logban")
-    .setDescription("Log a ban")
+    .setName("addban")
+    .setDescription("Log a ban.")
     .addStringOption(user => {
       return user
         .setName("user")

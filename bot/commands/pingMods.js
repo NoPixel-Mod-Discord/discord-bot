@@ -6,8 +6,8 @@ const API_URL = process.env.SERVER_URL;
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName("ping-mods")
-    .setDescription("Pings Mods")
+    .setName("pingmods")
+    .setDescription("Ping a streamer's mods")
     .addStringOption(streamer => {
       return streamer
         .setName("streamer")
