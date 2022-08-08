@@ -62,11 +62,19 @@ module.exports = {
         });
       }
 
+      if (fields.length > 0) {
+        return interaction.editReply({
+          embeds: [{ fields }]
+        });
+      }
+
       return interaction.editReply({
-        embeds: [{ fields }]
+        content: `No logs found for ${user}`
       });
     } catch (error) {
-      console.error(error);
+      await interaction.editReply({
+        content: `${error.response.data.err}`
+      });
     }
   }
 };
