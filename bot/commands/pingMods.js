@@ -43,14 +43,15 @@ module.exports = {
       }
 
       if (list.length < 0) {
-        return interaction.reply({
-          content: "No mods found for Streamer"
+        return interaction.editReply({
+          content: `No mods found for ${streamer} in database.`
         });
       }
 
-      interaction.channel.send(` ${list.toString()}`);
-
-      return interaction.editReply(`Pinged mod ${streamer}`);
+      return (
+        interaction.channel.send(` ${list.toString()}`) &&
+        interaction.editReply(`Pinged mod ${streamer}`)
+      );
     } catch (error) {
       console.error(error);
     }
