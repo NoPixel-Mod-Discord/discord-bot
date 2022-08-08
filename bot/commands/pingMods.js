@@ -42,16 +42,15 @@ module.exports = {
         list.push(user);
       }
 
-      if (list.length < 0) {
-        return interaction.editReply({
-          content: `No mods found for ${streamer} in database.`
-        });
+      if (list.length > 0) {
+        return (
+          interaction.channel.send(` ${list.toString()}`) &&
+          interaction.editReply(`Pinged mod ${streamer}`)
+        );
       }
-
-      return (
-        interaction.channel.send(` ${list.toString()}`) &&
-        interaction.editReply(`Pinged mod ${streamer}`)
-      );
+      return interaction.editReply({
+        content: `No mods found for ${streamer} in database.`
+      });
     } catch (error) {
       console.error(error);
     }
