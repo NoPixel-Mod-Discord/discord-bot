@@ -2,12 +2,6 @@ const express = require("express");
 require("dotenv").config();
 cors = require("cors");
 
-// API Routes
-const addBanRoute = require("./routes/addBan");
-const moderatorRoute = require("./routes/getModeratorId");
-const lookUpBanRoute = require("./routes/lookUpBan");
-const addModeratorRoute = require("./routes/addModerator");
-
 // Initialize Express Client
 const app = express();
 
@@ -24,11 +18,7 @@ app.get("/", async (req, res) => {
   res.send("Hello World");
 });
 
-// API Routes
-app.use("/add-ban", addBanRoute);
-app.use("/get-moderator-id", moderatorRoute);
-app.use("/lookup-ban", lookUpBanRoute);
-app.use("/add-moderator", addModeratorRoute);
+app.use("/api/v1", require("./routes"));
 
 app.listen(PORT, () =>
   console.info(`🚀 Server ready at: http://localhost:${PORT}`)
