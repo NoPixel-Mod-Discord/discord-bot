@@ -42,7 +42,7 @@ model Ban {
   bannedAt     DateTime      @default(now())
   updatedAt    DateTime?     @updatedAt
   banPlatform  Platform
-  userId       String        @unique
+  userId       String
   isBanned     Boolean       @default(true)
   streamerId   String        
   moderatorId  String        
