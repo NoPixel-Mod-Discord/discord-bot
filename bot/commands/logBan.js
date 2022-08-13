@@ -41,7 +41,8 @@ module.exports = {
     .addStringOption(evidence => {
       return evidence
         .setName("evidence")
-        .setDescription("Evidence for the ban");
+        .setDescription("Evidence for the ban")
+        .setRequired(true);
     }),
   async execute(interaction) {
     await interaction.deferReply();
