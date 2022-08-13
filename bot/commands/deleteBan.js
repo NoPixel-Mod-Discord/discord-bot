@@ -38,7 +38,7 @@ module.exports = {
           "`" +
           `Deleted ban for id:` +
           data.id +
-          `logged by ${data.moderatorId}` +
+          ` logged by ${data.moderatorId}` +
           "`"
       });
     } catch (error) {
