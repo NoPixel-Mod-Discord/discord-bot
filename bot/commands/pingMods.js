@@ -11,13 +11,20 @@ module.exports = {
     .addStringOption(streamer => {
       return streamer
         .setName("streamer")
-        .setDescription("The streamer you want to look mods for")
+        .setDescription("The streamer you want to ping mods for")
+        .setRequired(true);
+    })
+    .addStringOption(reason => {
+      return reason
+        .setName("reason")
+        .setDescription("Reason for pinging")
         .setRequired(true);
     }),
   async execute(interaction) {
     await interaction.deferReply();
 
     let streamer = interaction.options.getString("streamer");
+    const reason = interaction.options.getString("reason");
 
     streamer = streamer.toLowerCase();
 
@@ -45,7 +52,7 @@ module.exports = {
       if (list.length > 0) {
         return (
           interaction.channel.send(` ${list.toString()}`) &&
-          interaction.editReply(`Pinged mod ${streamer}`)
+          interaction.editReply(`Pinged mod ${streamer} ${reason}`)
         );
       }
       return interaction.editReply({
