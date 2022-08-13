@@ -8,7 +8,7 @@ module.exports = {
       "Creates a temporary invite link to invite users into server. (Link is active for 12 Hour)"
     ),
   async execute(interaction) {
-    await interaction.deferReply({ ephemeral: true });
+    await interaction.deferReply();
 
     const inviteUrl = await interaction.guild.channels.cache
       .find(channel => channel.id === interaction.channelId)
@@ -22,7 +22,11 @@ module.exports = {
     await interaction.user.send(inviteUrl);
 
     await interaction.editReply({
-      content: `An invite link has been sent to your dm.`
+      content:
+        "<@" +
+        interaction.user.id +
+        ">" +
+        ` An invite link has been sent to your dm.`
     });
   }
 };
