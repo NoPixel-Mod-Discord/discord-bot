@@ -5,8 +5,8 @@ const checkAPIKey = require("../../middleware");
 const router = express.Router();
 
 router.post("/add", checkAPIKey, require("./add"));
-router.get("/lookup", checkAPIKey, require("./lookup"));
-router.put("/update", checkAPIKey, require("./update"));
-router.delete("/delete", checkAPIKey, require("./delete"));
+router.post("/lookup", checkAPIKey, require("./lookup"));
+router.post("/update", checkAPIKey, require("./update"));
+router.post("/delete", checkAPIKey, require("./delete"));
 
 module.exports = router;

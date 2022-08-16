@@ -1,4 +1,4 @@
-const { default: axios } = require("axios");
+const { post } = require("axios");
 require("dotenv").config();
 const { SlashCommandBuilder } = require("discord.js");
 const { getUserName } = require("../../server/libs/twitch/twitch-api");
@@ -35,7 +35,7 @@ module.exports = {
     user = user.toLowerCase();
 
     try {
-      const { data } = await axios.get(
+      const { data } = await post(
         `${API_URL}/api/v1/ban/lookup`,
         {
           platform,
@@ -51,12 +51,13 @@ module.exports = {
       const fields = [];
       for (let i = 0; i < data.length; i++) {
         fields.push({
+          id: data[i].id,
           name: `${
-            data[i].platform === "twitch"
+            platform === "twitch"
               ? await getUserName(data[i].userId)
               : data[i].userId
           } was banned in ${
-            data[i].platform === "twitch"
+            platform === "twitch"
               ? await getUserName(data[i].streamerId)
               : data[i].streamerId
           } by ${await getUserName(data[i].moderatorId)} for ${
