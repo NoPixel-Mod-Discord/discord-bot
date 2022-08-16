@@ -39,7 +39,7 @@ module.exports = {
           "`" +
           `Deleted ban for id:` +
           data.id +
-          ` logged by ${await getUserName(data[i].moderatorId)}` +
+          ` logged by ${await getUserName(data.moderatorId)}` +
           "`"
       });
     } catch (error) {
