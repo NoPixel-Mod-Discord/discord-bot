@@ -1,6 +1,7 @@
 const { post } = require("axios");
 require("dotenv").config();
 const { SlashCommandBuilder } = require("discord.js");
+const { getUserName } = require("../../server/libs/twitch/twitch-api");
 
 const API_URL = process.env.SERVER_URL;
 
@@ -38,7 +39,7 @@ module.exports = {
           "`" +
           `Deleted ban for id:` +
           data.id +
-          ` logged by ${data.moderatorId}` +
+          ` logged by ${await getUserName(data[i].moderatorId)}` +
           "`"
       });
     } catch (error) {
