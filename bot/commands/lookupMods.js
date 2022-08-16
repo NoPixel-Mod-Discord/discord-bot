@@ -22,8 +22,14 @@ module.exports = {
 
     const data = "```" + mods.join("\n") + "```";
 
+    if (interaction.guild.roles.cache.find(role => role.name === "Admin")) {
+      return interaction.editReply({
+        content: data
+      });
+    }
+
     return interaction.editReply({
-      content: data
+      content: "You are not authorized to use this commands"
     });
   }
 };
