@@ -1,4 +1,4 @@
-const { default: axios } = require("axios");
+const { post } = require("axios");
 require("dotenv").config();
 const { SlashCommandBuilder } = require("discord.js");
 
@@ -56,22 +56,22 @@ module.exports = {
     streamer = streamer.toLowerCase();
 
     // Get modrator's Twitch id from database
-    const { data: moderator } = await axios.get(
-      `${API_URL}/api/v1/moderator/get-id`,
-      {
-        moderatorId: interaction.user.id
-      },
-      {
-        headers: {
-          "x-api-key": process.env.SERVER_API_KEY
-        }
-      }
-    );
-
-    // Add ban to database
     try {
-      if (moderator.length() > 0) {
-        const { data } = await axios.post(
+      const { data: moderator } = await post(
+        `${API_URL}/api/v1/moderator/get-id`,
+        {
+          moderatorId: interaction.user.id
+        },
+        {
+          headers: {
+            "x-api-key": process.env.SERVER_API_KEY
+          }
+        }
+      );
+
+      // Add ban to database
+      try {
+        const { data } = await post(
           `${API_URL}/api/v1/ban/add`,
           {
             platform,
@@ -103,14 +103,14 @@ module.exports = {
             content: `${data}`
           });
         }
-
+      } catch (error) {
         await interaction.editReply({
-          content: `You're not in the database. Please go to https://npbot.tech and connect you account to bot.`
+          content: `${error.response.data.err}`
         });
       }
     } catch (error) {
       await interaction.editReply({
-        content: `${error.response.data.err}`
+        content: `You're not in the database. Please go to https://npbot.tech and connect you account to bot.`
       });
     }
   }
