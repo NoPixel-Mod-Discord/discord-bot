@@ -1,4 +1,4 @@
-const { post } = require("axios");
+const { default: axios } = require("axios");
 require("dotenv").config();
 const { SlashCommandBuilder } = require("discord.js");
 
@@ -56,7 +56,7 @@ module.exports = {
     streamer = streamer.toLowerCase();
 
     // Get modrator's Twitch id from database
-    const { data: moderator } = await post(
+    const { data: moderator } = await axios.get(
       `${API_URL}/api/v1/moderator/get-id`,
       {
         moderatorId: interaction.user.id
@@ -70,36 +70,42 @@ module.exports = {
 
     // Add ban to database
     try {
-      const { data } = await post(
-        `${API_URL}/api/v1/ban/add`,
-        {
-          platform,
-          user,
-          streamer,
-          moderator,
-          reason,
-          evidence
-        },
-        {
-          headers: {
-            "x-api-key": process.env.SERVER_API_KEY
+      if (moderator.length() > 0) {
+        const { data } = await axios.post(
+          `${API_URL}/api/v1/ban/add`,
+          {
+            platform,
+            user,
+            streamer,
+            moderator,
+            reason,
+            evidence
+          },
+          {
+            headers: {
+              "x-api-key": process.env.SERVER_API_KEY
+            }
           }
+        );
+
+        const response =
+          "`Ban Id:" +
+          data.id +
+          "`" +
+          `\n ${user} is banned in ${streamer}'chat for ${reason} ${evidence}.`;
+
+        if (data.reason === reason) {
+          await interaction.editReply({
+            content: response
+          });
+        } else {
+          await interaction.editReply({
+            content: `${data}`
+          });
         }
-      );
 
-      const response =
-        "`Ban Id:" +
-        data.id +
-        "`" +
-        `\n ${user} is banned in ${streamer}'chat for ${reason} ${evidence}.`;
-
-      if (data.reason === reason) {
         await interaction.editReply({
-          content: response
-        });
-      } else {
-        await interaction.editReply({
-          content: `${data}`
+          content: `You're not in the database. Please go to https://npbot.tech and connect you account to bot.`
         });
       }
     } catch (error) {

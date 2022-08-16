@@ -1,4 +1,4 @@
-const { post } = require("axios");
+const { default: axios } = require("axios");
 require("dotenv").config();
 const { SlashCommandBuilder } = require("discord.js");
 
@@ -21,7 +21,7 @@ module.exports = {
     banId = parseInt(banId);
 
     try {
-      const { data } = await post(
+      const { data } = await axios.delete(
         `${API_URL}/api/v1/ban/update`,
         {
           banId
