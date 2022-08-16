@@ -1,5 +1,4 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { Client, MessageEmbed, MessageAttachment, AttachmentBuilder } = require('discord.js');
+const { Client, MessageEmbed, MessageAttachment, AttachmentBuilder, SlashCommandBuilder } = require('discord.js');
 
 module.exports = {
         data: new SlashCommandBuilder()
@@ -17,7 +16,6 @@ module.exports = {
         const reason = interaction.options.getString('reason');
         const image = (interaction.options.getString('url') !== null) ? interaction.options.getString('url') : attachment.url;
 
-        if (user && reason && image) {
         const embed = new MessageEmbed()
         .setColor('RED')
         .setTitle('** BE ON THE LOOKOUT **')
@@ -27,8 +25,5 @@ module.exports = {
 
         let msgEmbed = await interaction.reply({embeds: [embed]});
 
-        } else {
-            await interaction.reply("Error, please notify a bot dev.");
-          }
         },
 };
