@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require("discord.js");
-const { default: axios } = require("axios");
+const { post } = require("axios");
 require("dotenv").config();
 
 const API_URL = process.env.SERVER_URL;
@@ -31,7 +31,7 @@ module.exports = {
     try {
       const list = [];
 
-      const { data } = await axios.get(
+      const { data } = await post(
         `${API_URL}/api/v1/moderator/ping`,
         {
           streamer
