@@ -22,7 +22,11 @@ module.exports = {
 
     const data = "```" + mods.join("\n") + "```";
 
-    if (interaction.guild.roles.cache.find(role => role.name === "Admin")) {
+    const user = interaction.guild.members.cache.find(
+      members => members.user.id === interaction.user.id
+    );
+
+    if (user._roles.includes(process.env.ADMIN_ROLE_ID)) {
       return interaction.editReply({
         content: data
       });
