@@ -24,10 +24,5 @@ module.exports = {
         .setImage(`${image}`)
 
          await interaction.reply({embeds: [embed]});
-                
-         if (user || reason || image  === null) {
-             await interaction.reply("Please input all fields.")
-         }
-
         },
 };
