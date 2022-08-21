@@ -19,8 +19,8 @@ This application requires Node.js v16
 ```bash
 $ git clone git@github.com:NoPixel-Mod-Discord/discord-bot.git
 $ cd discord-bot
-$ npm install or yarn
-$ npm run dev or yarn dev
+$ npm install
+$ npm run dev
 ```
 
 > **_Note_**: Please refer to the env.example file for all the environment variables.
@@ -31,10 +31,6 @@ $ npm run dev or yarn dev
 - Canary - Development/Testing
 - Feature - feat/Branch Name
 - Bug - fix/Branch Name
-
-## Contributing
-
-Please see our [contributing.md](contributing.md).
 
 ## Authors
 
