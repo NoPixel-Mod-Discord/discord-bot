@@ -1,50 +1,35 @@
 {
-  "name": "discord-bot",
-  "description": "No-Pixel Mods Discord bot for mod/streamer verification and manual/automatic ban logging.",
+  "name": "np-mod-discord-bot",
   "version": "1.0.0",
-  "main": "index.js",
-  "repository": "git@github.com:NoPixel-Mod-Discord/discord-bot.git",
-  "author": "NoPixel-Mod-Discord",
-  "license": "MIT",
+  "description": "An opinionated discord built using Express, Prisma, MySql, React and JavaScript for ban tracking across channels, streamer/mod verification and communication.",
   "private": true,
   "scripts": {
-    "dev": "nodemon .",
-    "check-format": "prettier --check .",
-    "check-lint": "eslint . --ext js",
-    "format": "prettier --write .",
-    "lint": "eslint . --ext js --fix",
-    "check": "npm run check-format && npm run check-lint",
-    "fix": "npm run format && npm run lint",
-    "start:bot": "NODE_ENV=production node bot/index.js",
-    "start:server": "NODE_ENV=production node server/index.js",
-    "prepare": "husky install"
+    "dev": "turbo run dev --parallel",
+    "build": "turbo run build",
+    "check": "turbo run check",
+    "fix": "turbo run fix",
+    "start": "turbo run start --parallel",
+    "format": "prettier --write '**/*.{ts,tsx,js,jsx,json,css,scss}'"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NoPixel-Mod-Discord/discord-bot.git"
+  },
+  "author": "NoPixel Mods Discord",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/NoPixel-Mod-Discord/discord-bot/issues"
+  },
+  "homepage": "https://github.com/NoPixel-Mod-Discord/discord-bot#readme",
+  "workspaces": [
+    "/*"
+  ],
   "devDependencies": {
-    "eslint": "^8.20.0",
-    "eslint-config-google": "^0.14.0",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-prettier": "^4.2.1",
-    "husky": "^8.0.1",
-    "lint-staged": "^13.0.3",
-    "nodemon": "^2.0.19",
-    "prettier": "^2.7.1"
+    "prettier": "^2.7.1",
+    "turbo": "^1.4.3"
   },
-  "dependencies": {
-    "@discordjs/rest": "^1.0.0",
-    "@jlengstorf/get-twitch-oauth": "^1.0.1",
-    "@prisma/client": "^4.1.0",
-    "axios": "^0.27.2",
-    "cors": "^2.8.5",
-    "discord.js": "^14.0.3",
-    "dotenv": "^16.0.1",
-    "express": "^4.18.1",
-    "moment": "^2.29.4",
-    "node-html-parser": "^5.3.3",
-    "prisma": "^4.1.0",
-    "tmi.js": "^1.8.5"
-  },
-  "lint-staged": {
-    "*.js": "eslint --fix",
-    "*": "prettier --write"
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=7.0.0"
   }
 }

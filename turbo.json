@@ -1,0 +1,24 @@
+{
+  "$schema": "https://turborepo.org/schema.json",
+  "remoteCache": {
+    "signature": true
+  },
+  "pipeline": {
+    "dev": {
+      "cache": false
+    },
+    "start": {
+      "outputs": []
+    },
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**", ".next/**"]
+    },
+    "check": {
+      "outputs": []
+    },
+    "fix": {
+      "outputs": []
+    }
+  }
+}
