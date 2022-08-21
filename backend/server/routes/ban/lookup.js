@@ -1,7 +1,7 @@
 const ReturnValue = require("../../utils/models");
 const { prismaClient } = require("../../libs/prisma");
 
-const { getUserId } = require("../../libs/twitch/twitch-api");
+const { getUserId, getUserName } = require("../../libs/twitch/twitch-api");
 
 const lookupBan = async (req, res) => {
   const retVal = new ReturnValue();
@@ -20,9 +20,21 @@ const lookupBan = async (req, res) => {
           await prismaClient.$disconnect();
         });
 
-      retVal.body = response;
-    } catch (error) {
-      console.error(error);
+      const data = [];
+
+      for (let i = 0; i < response.length; i++) {
+        data.push({
+          id: response[i].id,
+          userId: await getUserName(response[i].userId),
+          streamerId: await getUserName(response[i].streamerId),
+          moderatorId: await getUserName(response[i].moderatorId),
+          reason: response[i].reason,
+          evidence: response[i].evidence,
+        });
+      }
+
+      retVal.body = data;
+    } catch (e) {
       retVal.status = 500;
       retVal.body.err = "Something went wrong :(";
     } finally {
@@ -40,9 +52,21 @@ const lookupBan = async (req, res) => {
           await prismaClient.$disconnect();
         });
 
-      retVal.body = response;
-    } catch (error) {
-      console.error(error);
+      const data = [];
+
+      for (let i = 0; i < response.length; i++) {
+        data.push({
+          id: response[i].id,
+          userId: response[i].userId,
+          streamerId: response[i].streamerId,
+          moderatorId: await getUserName(response[i].moderatorId),
+          reason: response[i].reason,
+          evidence: response[i].evidence,
+        });
+      }
+
+      retVal.body = data;
+    } catch (e) {
       retVal.status = 500;
       retVal.body.err = "Something went wrong :(";
     } finally {

@@ -1,9 +1,6 @@
-const { post } = require("axios");
-require("dotenv").config();
+const axios = require("axios");
+const { Config } = require("../../config");
 const { SlashCommandBuilder } = require("discord.js");
-const { getUserName } = require("../../server/libs/twitch/twitch-api");
-
-const API_URL = process.env.SERVER_URL;
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -35,15 +32,15 @@ module.exports = {
     user = user.toLowerCase();
 
     try {
-      const { data } = await post(
-        `${API_URL}/api/v1/ban/lookup`,
+      const { data } = await axios.get(
+        `${Config.serverApiUrl}/api/v1/ban/lookup`,
         {
-          platform,
-          user,
-        },
-        {
+          data: {
+            platform,
+            user,
+          },
           headers: {
-            "x-api-key": process.env.SERVER_API_KEY,
+            "x-api-key": Config.serverApiKey,
           },
         },
       );
@@ -52,17 +49,7 @@ module.exports = {
       for (let i = 0; i < data.length; i++) {
         fields.push({
           id: data[i].id,
-          name: `${
-            platform === "twitch"
-              ? await getUserName(data[i].userId)
-              : data[i].userId
-          } was banned in ${
-            platform === "twitch"
-              ? await getUserName(data[i].streamerId)
-              : data[i].streamerId
-          } by ${await getUserName(data[i].moderatorId)} for ${
-            data[i].reason
-          }.`,
+          name: `${data[i].userId} was banned in ${data[i].streamerId} by ${data[i].moderatorId} for ${data[i].reason}.`,
           value: ` Evidence: ${data[i].evidence}`,
         });
       }
@@ -76,9 +63,9 @@ module.exports = {
       return interaction.editReply({
         content: `No logs found for ${user}`,
       });
-    } catch (error) {
+    } catch (e) {
       await interaction.editReply({
-        content: `${error.response.data.err}`,
+        content: e.response.data.err,
       });
     }
   },

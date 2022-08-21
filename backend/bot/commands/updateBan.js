@@ -1,8 +1,6 @@
-const { post } = require("axios");
-require("dotenv").config();
+const axios = require("axios");
+const { Config } = require("../../config");
 const { SlashCommandBuilder } = require("discord.js");
-
-const API_URL = process.env.SERVER_URL;
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -31,8 +29,8 @@ module.exports = {
     banId = parseInt(banId);
 
     try {
-      const { data } = await post(
-        `${API_URL}/api/v1/ban/update`,
+      const { data } = await axios.patch(
+        `${Config.serverApiUrl}/api/v1/ban/update`,
         {
           banId,
           reason,
@@ -40,7 +38,7 @@ module.exports = {
         },
         {
           headers: {
-            "x-api-key": process.env.SERVER_API_KEY,
+            "x-api-key": Config.serverApiKey,
           },
         },
       );
@@ -71,9 +69,9 @@ module.exports = {
           content: response,
         });
       }
-    } catch (error) {
+    } catch (e) {
       await interaction.editReply({
-        content: `${error.response.data.err}`,
+        content: `${e.response.data.err}`,
       });
     }
   },

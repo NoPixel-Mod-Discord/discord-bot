@@ -13,7 +13,6 @@ app.use(cors());
 
 // Status Check
 app.get("/", async (req, res) => {
-  console.info("Server was pinged");
   res.status(200);
   res.send("Hello World");
 });

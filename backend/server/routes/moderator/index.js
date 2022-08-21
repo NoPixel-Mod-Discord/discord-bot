@@ -5,7 +5,7 @@ const checkAPIKey = require("../../middleware");
 const router = express.Router();
 
 router.post("/add", checkAPIKey, require("./add"));
-router.post("/get-id", checkAPIKey, require("./get-id"));
-router.post("/ping", checkAPIKey, require("./ping"));
+router.get("/get-id", checkAPIKey, require("./get-id"));
+router.get("/ping", checkAPIKey, require("./ping"));
 
 module.exports = router;

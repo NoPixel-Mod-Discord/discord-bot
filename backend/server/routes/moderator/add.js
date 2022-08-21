@@ -22,9 +22,9 @@ const addModerator = async (req, res) => {
         await prismaClient.$disconnect();
       });
     retVal.body = response;
-  } catch (error) {
-    if (error instanceof PrismaClientKnownRequestError) {
-      if (error.code === "P2002") {
+  } catch (e) {
+    if (e instanceof PrismaClientKnownRequestError) {
+      if (e.code === "P2002") {
         retVal.status = 500;
         retVal.body.err =
           "You are already in the database. Please stop spamming.";

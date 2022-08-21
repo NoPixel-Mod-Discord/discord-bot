@@ -4,13 +4,10 @@ const path = require("node:path");
 const { Client, GatewayIntentBits, Collection } = require("discord.js");
 const { REST } = require("@discordjs/rest");
 const { Routes } = require("discord.js");
+const { Config } = require("../config");
 
 // Require dotenv to import ENV Variables
 require("dotenv").config();
-
-// Variables
-const CLIENT_ID = process.env.DISCORD_CLIENT_ID;
-const TOKEN = process.env.DISCORD_BOT_TOKEN;
 
 // Create a new client instance
 const client = new Client({
@@ -32,9 +29,9 @@ for (const file of commandsFiles) {
   client.commands.set(command.data.name, command);
 }
 // Adds commads to bot on startup
-const rest = new REST({ version: "9" }).setToken(TOKEN);
+const rest = new REST({ version: "9" }).setToken(Config.discordBotToken);
 (async () => {
-  await rest.put(Routes.applicationCommands(CLIENT_ID), {
+  await rest.put(Routes.applicationCommands(Config.discordClientId), {
     body: commandsArray,
   });
 })();
@@ -57,8 +54,4 @@ for (const file of eventsFiles) {
 }
 
 // Login to Discord with your client's token
-client.login(TOKEN);
-
-module.exports = {
-  discordClient: client,
-};
+client.login(Config.discordBotToken);

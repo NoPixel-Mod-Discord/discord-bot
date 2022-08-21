@@ -1,16 +1,13 @@
-const { post } = require("axios");
-require("dotenv").config();
+const axios = require("axios");
 const { SlashCommandBuilder } = require("discord.js");
-const { getUserName } = require("../../server/libs/twitch/twitch-api");
-
-const API_URL = process.env.SERVER_URL;
+const { Config } = require("../../config");
 
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("deleteban")
     .setDescription("Delete a ban.")
-    .addStringOption(banid => {
-      return banid
+    .addStringOption(option => {
+      return option
         .setName("banid")
         .setDescription("Id of the ban you want to delete.")
         .setRequired(true);
@@ -22,14 +19,14 @@ module.exports = {
     banId = parseInt(banId);
 
     try {
-      const { data } = await post(
-        `${API_URL}/api/v1/ban/delete`,
+      const { data } = await axios.delete(
+        `${Config.serverApiUrl}/api/v1/ban/delete`,
         {
-          banId,
-        },
-        {
+          data: {
+            banId,
+          },
           headers: {
-            "x-api-key": process.env.SERVER_API_KEY,
+            "x-api-key": Config.serverApiKey,
           },
         },
       );
@@ -39,12 +36,12 @@ module.exports = {
           "`" +
           `Deleted ban for id:` +
           data.id +
-          ` logged by ${await getUserName(data.moderatorId)}` +
+          ` logged by ${data.moderatorId}` +
           "`",
       });
-    } catch (error) {
+    } catch (e) {
       await interaction.editReply({
-        content: `${error.response.data.err}`,
+        content: `${e.response.data.err}`,
       });
     }
   },

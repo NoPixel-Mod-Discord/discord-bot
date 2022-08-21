@@ -1,8 +1,6 @@
-const { post } = require("axios");
-require("dotenv").config();
+const axios = require("axios");
 const { SlashCommandBuilder } = require("discord.js");
-
-const API_URL = process.env.SERVER_URL;
+const { Config } = require("../../config");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -57,22 +55,22 @@ module.exports = {
 
     // Get modrator's Twitch id from database
     try {
-      const { data: moderator } = await post(
-        `${API_URL}/api/v1/moderator/get-id`,
+      const { data: moderator } = await axios.get(
+        `${Config.serverApiUrl}/api/v1/moderator/get-id`,
         {
-          moderatorId: interaction.user.id,
-        },
-        {
+          data: {
+            moderatorId: interaction.user.id,
+          },
           headers: {
-            "x-api-key": process.env.SERVER_API_KEY,
+            "x-api-key": Config.serverApiKey,
           },
         },
       );
 
-      // Add ban to database
+      //  Add ban to database
       try {
-        const { data } = await post(
-          `${API_URL}/api/v1/ban/add`,
+        const { data } = await axios.post(
+          `${Config.serverApiUrl}/api/v1/ban/add`,
           {
             platform,
             user,
@@ -83,7 +81,7 @@ module.exports = {
           },
           {
             headers: {
-              "x-api-key": process.env.SERVER_API_KEY,
+              "x-api-key": Config.serverApiKey,
             },
           },
         );
@@ -92,25 +90,19 @@ module.exports = {
           "`Ban Id:" +
           data.id +
           "`" +
-          `\n ${user} is banned in ${streamer}'chat for ${reason} ${evidence}.`;
+          `\n ${user} is banned in ${streamer}'s chat for ${reason} ${evidence}.`;
 
-        if (data.reason === reason) {
-          await interaction.editReply({
-            content: response,
-          });
-        } else {
-          await interaction.editReply({
-            content: `${data}`,
-          });
-        }
-      } catch (error) {
         await interaction.editReply({
-          content: `${error.response.data.err}`,
+          content: response,
+        });
+      } catch (e) {
+        await interaction.editReply({
+          content: e.response.data.err,
         });
       }
-    } catch (error) {
+    } catch (e) {
       await interaction.editReply({
-        content: `You're not in the database. Please go to https://npbot.tech and connect you account to bot.`,
+        content: e.response.data.err,
       });
     }
   },

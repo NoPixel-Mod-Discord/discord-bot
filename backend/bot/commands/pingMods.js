@@ -1,8 +1,6 @@
 const { SlashCommandBuilder } = require("discord.js");
-const { post } = require("axios");
-require("dotenv").config();
-
-const API_URL = process.env.SERVER_URL;
+const axios = require("axios");
+const { Config } = require("../../config");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -31,14 +29,14 @@ module.exports = {
     try {
       const list = [];
 
-      const { data } = await post(
-        `${API_URL}/api/v1/moderator/ping`,
+      const { data } = await axios.get(
+        `${Config.serverApiUrl}/api/v1/moderator/ping`,
         {
-          streamer,
-        },
-        {
+          data: {
+            streamer,
+          },
           headers: {
-            "x-api-key": process.env.SERVER_API_KEY,
+            "x-api-key": Config.serverApiKey,
           },
         },
       );
@@ -58,8 +56,10 @@ module.exports = {
       return interaction.editReply({
         content: `No mods found for ${streamer} in database.`,
       });
-    } catch (error) {
-      console.error(error);
+    } catch (e) {
+      await interaction.editReply({
+        content: e.response.data.err,
+      });
     }
   },
 };
