@@ -23,7 +23,7 @@ const addBan = async (req, res) => {
         });
 
       retVal.body = response;
-    } catch (error) {
+    } catch (e) {
       retVal.status = 500;
       retVal.body.err = "Something went wrong :(";
     } finally {
@@ -46,7 +46,7 @@ const addBan = async (req, res) => {
         });
 
       retVal.body = response;
-    } catch (error) {
+    } catch (e) {
       retVal.status = 500;
       retVal.body.err = "Something went wrong :(";
     } finally {
@@ -70,7 +70,7 @@ const addBan = async (req, res) => {
         });
 
       retVal.body = response;
-    } catch (error) {
+    } catch (e) {
       retVal.status = 500;
       retVal.body.err = "Something went wrong :(";
     } finally {

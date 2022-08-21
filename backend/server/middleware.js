@@ -1,11 +1,11 @@
-require("dotenv").config();
 const ReturnValue = require("./utils/models");
+const { Config } = require("../config");
 
 const API_KEY_HEADER_NAME = "x-api-key";
 
 const checkAPIKey = async (req, res, next) => {
   const keyFromHeader = req.headers[API_KEY_HEADER_NAME];
-  if (!keyFromHeader || keyFromHeader !== process.env.SERVER_API_KEY) {
+  if (!keyFromHeader || keyFromHeader !== Config.serverApiKey) {
     const retVal = new ReturnValue();
     retVal.status = 401;
     retVal.body.err = "Unauthorized";

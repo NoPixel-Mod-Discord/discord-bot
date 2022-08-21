@@ -1,5 +1,6 @@
 const ReturnValue = require("../../utils/models");
 const { prismaClient } = require("../../libs/prisma");
+const { getUserName } = require("../../libs/twitch/twitch-api");
 
 const lookupBan = async (req, res) => {
   const retVal = new ReturnValue();
@@ -17,9 +18,13 @@ const lookupBan = async (req, res) => {
         await prismaClient.$disconnect();
       });
 
-    retVal.body = response;
-  } catch (error) {
-    console.error(error);
+    const res = {
+      id: response.id,
+      moderatorId: await getUserName(response.moderatorId),
+    };
+
+    retVal.body = res;
+  } catch (e) {
     retVal.status = 500;
     retVal.body.err = "Something went wrong :(";
   } finally {

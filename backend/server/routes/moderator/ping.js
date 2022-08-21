@@ -30,8 +30,7 @@ const pingMods = async (req, res) => {
     }
 
     retVal.body = list;
-  } catch (error) {
-    console.error(error);
+  } catch (e) {
     retVal.status = 500;
     retVal.body.err = "Something went wrong :(";
   } finally {

@@ -9,6 +9,11 @@ export default async function handler(
 ) {
   const { userId, userDiscordId } = req.body;
 
+  const API_ENDPOINT =
+    process.env.NODE_ENV === "development"
+      ? "http://localhost:3333"
+      : process.env.API_ENDPOINT;
+
   const session = await unstable_getServerSession(req, res, authOptions);
 
   if (!session) {
@@ -17,14 +22,14 @@ export default async function handler(
 
   const response: any = await axios
     .post(
-      `${process.env.API_ENDPOINT}/api/v1/moderator/add`,
+      `${API_ENDPOINT}/api/v1/moderator/add`,
       {
         userDiscordId,
         userId,
       },
       {
         headers: {
-          "x-api-key": process.env.API_KEY as string,
+          "x-api-key": process.env.SERVER_API_KEY as string,
         },
       },
     )
@@ -46,5 +51,5 @@ export default async function handler(
     response.headers["access-control-allow-origin"] = "*";
   }
 
-  return res.status(201).json({ error: "" });
+  return res.status(201).json(response.data);
 }

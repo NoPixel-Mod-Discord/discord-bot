@@ -3,7 +3,7 @@
   "main": "index.js",
   "private": true,
   "scripts": {
-    "dev": "nodemon .",
+    "dev": "NODE_ENV=development nodemon .",
     "check-format": "prettier --check .",
     "check-lint": "eslint . --ext js",
     "format": "prettier --write .",

@@ -2,6 +2,8 @@ require("dotenv").config();
 const { SlashCommandBuilder } = require("discord.js");
 const { getChannelMods } = require("../../server/libs/twitch/tmi");
 
+const { Config } = require("../../config");
+
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("lookupmods")
@@ -26,14 +28,14 @@ module.exports = {
       members => members.user.id === interaction.user.id,
     );
 
-    if (user._roles.includes(process.env.ADMIN_ROLE_ID)) {
+    if (user._roles.includes(Config.serverAdminRoleId)) {
       return interaction.editReply({
         content: data,
       });
     }
 
     return interaction.editReply({
-      content: "You are not authorized to use this commands",
+      content: "You are not authorized to use this command!",
     });
   },
 };

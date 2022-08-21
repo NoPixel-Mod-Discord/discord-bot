@@ -39,8 +39,8 @@ const addBan = async (req, res) => {
       } else {
         retVal.body = `You are not a mod for ${streamer}`;
       }
-    } catch (error) {
-      if (error instanceof PrismaClientValidationError) {
+    } catch (e) {
+      if (e instanceof PrismaClientValidationError) {
         retVal.status = 500;
         retVal.body.err =
           "Username is incorrect or does not exist in Twitch database.";
@@ -71,7 +71,7 @@ const addBan = async (req, res) => {
         });
 
       retVal.body = response;
-    } catch (error) {
+    } catch (e) {
       retVal.status = 500;
       retVal.body.err = "Something went wrong :(";
     } finally {

@@ -16,10 +16,10 @@ const getModeratorId = async (req, res) => {
       .finally(async () => await prismaClient.$disconnect());
 
     retVal.body = response.userId;
-  } catch (error) {
-    console.error(error);
+  } catch (e) {
     retVal.status = 500;
-    retVal.body.err = "Something went wrong :(";
+    retVal.body.err =
+      "You're not in the database. Please go to https://npbot.tech and connect you account to bot else something went wrong either try again or report to devs :(";
   } finally {
     res.status(retVal.status).json(retVal.body);
   }

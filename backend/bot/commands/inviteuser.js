@@ -1,4 +1,3 @@
-require("dotenv").config();
 const { SlashCommandBuilder } = require("discord.js");
 
 module.exports = {

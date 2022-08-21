@@ -1,5 +1,5 @@
-require("dotenv").config();
 const { Client } = require("tmi.js");
+const { Config } = require("../../../config");
 
 const tmiClient = new Client({
   connection: {
@@ -7,8 +7,8 @@ const tmiClient = new Client({
     reconnect: true,
   },
   identity: {
-    username: process.env.TWITCH_USER_NAME,
-    password: "oauth:" + process.env.TWITCH_ACCESS_TOKEN,
+    username: Config.twitchUsername,
+    password: "oauth:" + Config.twitchAccessToken,
   },
 });
 
