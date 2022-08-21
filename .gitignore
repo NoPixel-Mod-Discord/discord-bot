@@ -40,6 +40,9 @@ build/Release
 # Dependency directories
 node_modules/
 jspm_packages/
+/.pnp
+.pnp.js
+
 
 # TypeScript v1 declaration files
 typings/
@@ -70,9 +73,7 @@ typings/
 
 # dotenv environment variables file
 .env
-.env.local
-.env.development
-.env.test
+.env.*
 
 # DynamoDB Local files
 .dynamodb/
@@ -80,3 +81,13 @@ typings/
 #build
 build
 dist
+
+# vercel
+.vercel
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
