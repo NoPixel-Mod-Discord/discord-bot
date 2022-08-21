@@ -72,23 +72,23 @@ export default Home;
 export const getServerSideProps: GetServerSideProps = async context => {
   const session = await getSession(context);
 
-  if (session) {
-    const response = await getUserTwitchConnection(session?.accessToken || "");
-
-    const twitchConnection = response.find(
-      (connection: any) => connection.type === "twitch",
-    );
-
+  if (!session) {
     return {
-      props: {
-        session,
-        twitchConnection,
-      },
+      props: {},
     };
   }
 
+  const response = await getUserTwitchConnection(session?.accessToken || "");
+
+  const twitchConnection = response.find(
+    (connection: any) => connection.type === "twitch",
+  );
+
   return {
-    props: {},
+    props: {
+      session,
+      twitchConnection,
+    },
   };
 };
 
