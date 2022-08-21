@@ -27,7 +27,7 @@ const Home: NextPage<PageProps> = ({ twitchConnection }) => {
 
   if (session) {
     return (
-      <div className="flex flex-col items-center justify-center w-full min-h-screen relative dark:bg-gray-900">
+      <div className="flex flex-col items-center justify-center w-full relative dark:bg-gray-900 h-full">
         <div className="flex flex-col space-y-6">
           <Avatar
             img={session.user.image}
@@ -51,17 +51,18 @@ const Home: NextPage<PageProps> = ({ twitchConnection }) => {
             </div>
           </Avatar>
         </div>
-        <div className="absolute top-6 right-8">
+        <div className="absolute top-6 right-8 flex space-x-4">
+          <Link href="/streamers">
+            <Button color="light">Streamer</Button>
+          </Link>
           <Button onClick={() => signOut()}>Sign out</Button>
         </div>
-        <Link href="/streamers">Streamer</Link>
       </div>
     );
   }
   return (
-    <div className="flex flex-col items-center justify-center w-full min-h-screen dark:bg-gray-900">
+    <div className="flex flex-col items-center justify-center w-full dark:bg-gray-900 h-full">
       <Button onClick={() => signIn("discord")}>Sign in Discord</Button>
-      <Link href="/streamers">Streamer</Link>
     </div>
   );
 };
@@ -71,23 +72,23 @@ export default Home;
 export const getServerSideProps: GetServerSideProps = async context => {
   const session = await getSession(context);
 
-  if (!session) {
+  if (session) {
+    const response = await getUserTwitchConnection(session?.accessToken || "");
+
+    const twitchConnection = response.find(
+      (connection: any) => connection.type === "twitch",
+    );
+
     return {
-      props: {},
+      props: {
+        session,
+        twitchConnection,
+      },
     };
   }
 
-  const response = await getUserTwitchConnection(session?.accessToken || "");
-
-  const twitchConnection = response.find(
-    (connection: any) => connection.type === "twitch",
-  );
-
   return {
-    props: {
-      session,
-      twitchConnection,
-    },
+    props: {},
   };
 };
 
