@@ -34,13 +34,13 @@ module.exports = {
       const { data } = await post(
         `${API_URL}/api/v1/moderator/ping`,
         {
-          streamer
+          streamer,
         },
         {
           headers: {
-            "x-api-key": process.env.SERVER_API_KEY
-          }
-        }
+            "x-api-key": process.env.SERVER_API_KEY,
+          },
+        },
       );
 
       for (let i = 0; i < data.length; i++) {
@@ -56,10 +56,10 @@ module.exports = {
         );
       }
       return interaction.editReply({
-        content: `No mods found for ${streamer} in database.`
+        content: `No mods found for ${streamer} in database.`,
       });
     } catch (error) {
       console.error(error);
     }
-  }
+  },
 };

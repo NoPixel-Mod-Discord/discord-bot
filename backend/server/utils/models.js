@@ -5,7 +5,7 @@ class ReturnValue {
     this.status = 200;
     this.body = {
       err: null,
-      data: null
+      data: null,
     };
   }
 }

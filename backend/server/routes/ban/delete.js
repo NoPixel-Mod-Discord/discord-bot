@@ -10,8 +10,8 @@ const lookupBan = async (req, res) => {
     const response = await prismaClient.ban
       .delete({
         where: {
-          id: banId
-        }
+          id: banId,
+        },
       })
       .finally(async () => {
         await prismaClient.$disconnect();

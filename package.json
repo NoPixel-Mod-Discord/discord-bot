@@ -5,7 +5,8 @@
   "private": true,
   "scripts": {
     "dev": "turbo run dev --parallel",
-    "lint": "turbo run lint",
+    "build": "turbo run build",
+    "check": "turbo run check",
     "fix": "turbo run fix",
     "start": "turbo run start --parallel",
     "format": "prettier --write '**/*.{ts,tsx,js,jsx,json,css,scss}'"

@@ -6,12 +6,12 @@ const router = express.Router();
 const defaultRoutes = [
   {
     path: "/ban",
-    route: require("./ban")
+    route: require("./ban"),
   },
   {
     path: "/moderator",
-    route: require("./moderator")
-  }
+    route: require("./moderator"),
+  },
 ];
 
 defaultRoutes.forEach(route => {

@@ -1,6 +1,6 @@
 const express = require("express");
 require("dotenv").config();
-cors = require("cors");
+const cors = require("cors");
 
 // Initialize Express Client
 const app = express();
@@ -21,5 +21,5 @@ app.get("/", async (req, res) => {
 app.use("/api/v1", require("./routes"));
 
 app.listen(PORT, () =>
-  console.info(`🚀 Server ready at: http://localhost:${PORT}`)
+  console.info(`🚀 Server ready at: http://localhost:${PORT}`),
 );

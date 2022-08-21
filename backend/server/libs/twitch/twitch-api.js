@@ -10,15 +10,15 @@ const getUserId = async userName => {
   const { access_token: accessToken } = await getTwitchAccessToken({
     client_id: process.env.TWITCH_CLIENT_ID,
     client_secret: process.env.TWITCH_CLIENT_SECRET,
-    scopes: "user:read:email"
+    scopes: "user:read:email",
   });
 
   try {
     const response = await get(URL, {
       headers: {
         "Client-ID": process.env.TWITCH_CLIENT_ID,
-        Authorization: `Bearer ${accessToken}`
-      }
+        Authorization: `Bearer ${accessToken}`,
+      },
     });
 
     const { id } = await response.data.data[0];
@@ -35,15 +35,15 @@ const getUserName = async userId => {
   const { access_token: accessToken } = await getTwitchAccessToken({
     client_id: process.env.TWITCH_CLIENT_ID,
     client_secret: process.env.TWITCH_CLIENT_SECRET,
-    scopes: "user:read:email"
+    scopes: "user:read:email",
   });
 
   try {
     const response = await get(URL, {
       headers: {
         "Client-ID": process.env.TWITCH_CLIENT_ID,
-        Authorization: `Bearer ${accessToken}`
-      }
+        Authorization: `Bearer ${accessToken}`,
+      },
     });
 
     const { login } = await response.data.data[0];
@@ -56,5 +56,5 @@ const getUserName = async userId => {
 
 module.exports = {
   getUserId,
-  getUserName
+  getUserName,
 };

@@ -20,8 +20,8 @@ const pingMods = async (req, res) => {
 
       const response = await prismaClient.mod.findUnique({
         where: {
-          userId: userTwitchId
-        }
+          userId: userTwitchId,
+        },
       });
 
       if (response !== null) {

@@ -36,26 +36,26 @@ module.exports = {
         {
           banId,
           reason,
-          evidence
+          evidence,
         },
         {
           headers: {
-            "x-api-key": process.env.SERVER_API_KEY
-          }
-        }
+            "x-api-key": process.env.SERVER_API_KEY,
+          },
+        },
       );
 
       if (reason === null) {
         const response =
           "Updated evidence for" + "`Ban Id:" + data.id + "` " + data.evidence;
         await interaction.editReply({
-          content: response
+          content: response,
         });
       } else if (evidence === null) {
         const response =
           "Updated reason for " + "`Ban Id:" + data.id + "` " + data.reason;
         await interaction.editReply({
-          content: response
+          content: response,
         });
       } else {
         const response =
@@ -68,13 +68,13 @@ module.exports = {
           data.evidence;
 
         await interaction.editReply({
-          content: response
+          content: response,
         });
       }
     } catch (error) {
       await interaction.editReply({
-        content: `${error.response.data.err}`
+        content: `${error.response.data.err}`,
       });
     }
-  }
+  },
 };

@@ -1,22 +1,18 @@
 module.exports = {
   env: {
-    browser: true,
-    node: true,
+    commonjs: true,
     es2021: true,
+    node: true,
   },
-  extends: ["next/core-web-vitals", "prettier", "eslint:recommended"],
-  parser: "@typescript-eslint/parser",
+  extends: ["google", "prettier"],
   parserOptions: {
-    ecmaVersion: 2021,
+    ecmaVersion: "latest",
     sourceType: "module",
-    ecmaFeatures: {
-      jsx: true,
-    },
   },
   plugins: ["prettier"],
   rules: {
-    "prettier/prettier": 1,
-    "no-console": [1, { allow: ["error", "info"] }],
-    "react/prop-types": 0,
+    "no-console": ["warn", { allow: ["info", "error"] }],
+    "prettier/prettier": "warn",
+    "require-jsdoc": "off",
   },
 };

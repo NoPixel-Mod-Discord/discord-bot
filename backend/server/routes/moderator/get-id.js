@@ -10,8 +10,8 @@ const getModeratorId = async (req, res) => {
     const response = await prismaClient.mod
       .findUnique({
         where: {
-          userDiscordId: moderatorId
-        }
+          userDiscordId: moderatorId,
+        },
       })
       .finally(async () => await prismaClient.$disconnect());
 

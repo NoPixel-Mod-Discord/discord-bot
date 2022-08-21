@@ -27,8 +27,8 @@ const addBan = async (req, res) => {
               streamerId: await getUserId(streamer),
               moderatorId: moderator,
               reason,
-              evidence
-            }
+              evidence,
+            },
           })
 
           .finally(async () => {
@@ -63,8 +63,8 @@ const addBan = async (req, res) => {
             streamerId: streamer,
             moderatorId: moderator,
             reason,
-            evidence
-          }
+            evidence,
+          },
         })
         .finally(async () => {
           await prismaClient.$disconnect();

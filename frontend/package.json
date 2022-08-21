@@ -9,6 +9,7 @@
     "check-format": "prettier --check .",
     "check-lint": "eslint . --ext .jsx,.tsx,.js,.ts",
     "check-types": "tsc --pretty --noEmit",
+    "check": "npm run check-format && npm run check-lint && npm run check-types",
     "format": "prettier --write .",
     "lint": "eslint . --ext js --fix",
     "fix": "npm run format && npm run lint"

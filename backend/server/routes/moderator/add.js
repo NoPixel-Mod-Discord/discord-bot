@@ -15,8 +15,8 @@ const addModerator = async (req, res) => {
           userId,
           createdAt: new Date(),
           isVerified: true,
-          modType: "twitch"
-        }
+          modType: "twitch",
+        },
       })
       .finally(async () => {
         await prismaClient.$disconnect();

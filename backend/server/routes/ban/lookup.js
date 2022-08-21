@@ -13,8 +13,8 @@ const lookupBan = async (req, res) => {
       const response = await prismaClient.ban
         .findMany({
           where: {
-            userId: await getUserId(user)
-          }
+            userId: await getUserId(user),
+          },
         })
         .finally(async () => {
           await prismaClient.$disconnect();
@@ -33,8 +33,8 @@ const lookupBan = async (req, res) => {
       const response = await prismaClient.ban
         .findMany({
           where: {
-            userId: user
-          }
+            userId: user,
+          },
         })
         .finally(async () => {
           await prismaClient.$disconnect();

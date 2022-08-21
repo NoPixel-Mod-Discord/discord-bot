@@ -23,17 +23,17 @@ module.exports = {
     const data = "```" + mods.join("\n") + "```";
 
     const user = interaction.guild.members.cache.find(
-      members => members.user.id === interaction.user.id
+      members => members.user.id === interaction.user.id,
     );
 
     if (user._roles.includes(process.env.ADMIN_ROLE_ID)) {
       return interaction.editReply({
-        content: data
+        content: data,
       });
     }
 
     return interaction.editReply({
-      content: "You are not authorized to use this commands"
+      content: "You are not authorized to use this commands",
     });
-  }
+  },
 };

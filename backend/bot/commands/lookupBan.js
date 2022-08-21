@@ -24,7 +24,7 @@ module.exports = {
           { name: "Twitch", value: "twitch" },
           { name: "YouTube", value: "youtube" },
           { name: "Facebook", value: "facebook" },
-          { name: "Discord", value: "discord" }
+          { name: "Discord", value: "discord" },
         );
     }),
   async execute(interaction) {
@@ -39,13 +39,13 @@ module.exports = {
         `${API_URL}/api/v1/ban/lookup`,
         {
           platform,
-          user
+          user,
         },
         {
           headers: {
-            "x-api-key": process.env.SERVER_API_KEY
-          }
-        }
+            "x-api-key": process.env.SERVER_API_KEY,
+          },
+        },
       );
 
       const fields = [];
@@ -63,23 +63,23 @@ module.exports = {
           } by ${await getUserName(data[i].moderatorId)} for ${
             data[i].reason
           }.`,
-          value: ` Evidence: ${data[i].evidence}`
+          value: ` Evidence: ${data[i].evidence}`,
         });
       }
 
       if (fields.length > 0) {
         return interaction.editReply({
-          embeds: [{ fields }]
+          embeds: [{ fields }],
         });
       }
 
       return interaction.editReply({
-        content: `No logs found for ${user}`
+        content: `No logs found for ${user}`,
       });
     } catch (error) {
       await interaction.editReply({
-        content: `${error.response.data.err}`
+        content: `${error.response.data.err}`,
       });
     }
-  }
+  },
 };

@@ -35,7 +35,7 @@ module.exports = {
           { name: "Twitch", value: "twitch" },
           { name: "YouTube", value: "youtube" },
           { name: "Facebook", value: "facebook" },
-          { name: "Discord", value: "discord" }
+          { name: "Discord", value: "discord" },
         );
     })
     .addStringOption(evidence => {
@@ -60,13 +60,13 @@ module.exports = {
       const { data: moderator } = await post(
         `${API_URL}/api/v1/moderator/get-id`,
         {
-          moderatorId: interaction.user.id
+          moderatorId: interaction.user.id,
         },
         {
           headers: {
-            "x-api-key": process.env.SERVER_API_KEY
-          }
-        }
+            "x-api-key": process.env.SERVER_API_KEY,
+          },
+        },
       );
 
       // Add ban to database
@@ -79,13 +79,13 @@ module.exports = {
             streamer,
             moderator,
             reason,
-            evidence
+            evidence,
           },
           {
             headers: {
-              "x-api-key": process.env.SERVER_API_KEY
-            }
-          }
+              "x-api-key": process.env.SERVER_API_KEY,
+            },
+          },
         );
 
         const response =
@@ -96,22 +96,22 @@ module.exports = {
 
         if (data.reason === reason) {
           await interaction.editReply({
-            content: response
+            content: response,
           });
         } else {
           await interaction.editReply({
-            content: `${data}`
+            content: `${data}`,
           });
         }
       } catch (error) {
         await interaction.editReply({
-          content: `${error.response.data.err}`
+          content: `${error.response.data.err}`,
         });
       }
     } catch (error) {
       await interaction.editReply({
-        content: `You're not in the database. Please go to https://npbot.tech and connect you account to bot.`
+        content: `You're not in the database. Please go to https://npbot.tech and connect you account to bot.`,
       });
     }
-  }
+  },
 };

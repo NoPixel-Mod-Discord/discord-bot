@@ -5,7 +5,7 @@ module.exports = {
   data: new SlashCommandBuilder()
     .setName("invitemod")
     .setDescription(
-      "Creates a temporary invite link to invite users into server. (Link is active for 12 Hour)"
+      "Creates a temporary invite link to invite users into server. (Link is active for 12 Hour)",
     ),
   async execute(interaction) {
     await interaction.deferReply();
@@ -15,7 +15,7 @@ module.exports = {
       .createInvite({
         maxAge: 43200,
         temporary: true,
-        maxUses: 1
+        maxUses: 1,
       })
       .then(invite => invite.url);
 
@@ -26,7 +26,7 @@ module.exports = {
         "<@" +
         interaction.user.id +
         ">" +
-        ` An invite link has been sent to your dm.`
+        ` An invite link has been sent to your dm.`,
     });
-  }
+  },
 };

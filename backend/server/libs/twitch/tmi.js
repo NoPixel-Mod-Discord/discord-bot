@@ -4,12 +4,12 @@ const { Client } = require("tmi.js");
 const tmiClient = new Client({
   connection: {
     secure: true,
-    reconnect: true
+    reconnect: true,
   },
   identity: {
     username: process.env.TWITCH_USER_NAME,
-    password: "oauth:" + process.env.TWITCH_ACCESS_TOKEN
-  }
+    password: "oauth:" + process.env.TWITCH_ACCESS_TOKEN,
+  },
 });
 
 tmiClient.connect().catch(err => console.error(err));
@@ -34,5 +34,5 @@ const checkUserIsMod = async streamer => {
 
 module.exports = {
   getChannelMods,
-  checkUserIsMod
+  checkUserIsMod,
 };

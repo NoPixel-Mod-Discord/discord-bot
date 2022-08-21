@@ -25,13 +25,13 @@ module.exports = {
       const { data } = await post(
         `${API_URL}/api/v1/ban/delete`,
         {
-          banId
+          banId,
         },
         {
           headers: {
-            "x-api-key": process.env.SERVER_API_KEY
-          }
-        }
+            "x-api-key": process.env.SERVER_API_KEY,
+          },
+        },
       );
 
       await interaction.editReply({
@@ -40,12 +40,12 @@ module.exports = {
           `Deleted ban for id:` +
           data.id +
           ` logged by ${await getUserName(data.moderatorId)}` +
-          "`"
+          "`",
       });
     } catch (error) {
       await interaction.editReply({
-        content: `${error.response.data.err}`
+        content: `${error.response.data.err}`,
       });
     }
-  }
+  },
 };

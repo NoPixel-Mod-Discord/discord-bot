@@ -11,11 +11,11 @@ const addBan = async (req, res) => {
       const response = await prismaClient.ban
         .update({
           where: {
-            id: banId
+            id: banId,
           },
           data: {
-            evidence: evidence
-          }
+            evidence: evidence,
+          },
         })
 
         .finally(async () => {
@@ -34,11 +34,11 @@ const addBan = async (req, res) => {
       const response = await prismaClient.ban
         .update({
           where: {
-            id: banId
+            id: banId,
           },
           data: {
-            reason: reason
-          }
+            reason: reason,
+          },
         })
 
         .finally(async () => {
@@ -57,12 +57,12 @@ const addBan = async (req, res) => {
       const response = await prismaClient.ban
         .update({
           where: {
-            id: banId
+            id: banId,
           },
           data: {
             reason: reason,
-            evidence: evidence
-          }
+            evidence: evidence,
+          },
         })
 
         .finally(async () => {

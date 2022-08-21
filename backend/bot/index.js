@@ -14,7 +14,7 @@ const TOKEN = process.env.DISCORD_BOT_TOKEN;
 
 // Create a new client instance
 const client = new Client({
-  intents: [GatewayIntentBits.Guilds]
+  intents: [GatewayIntentBits.Guilds],
 });
 
 // Handle Commands
@@ -35,7 +35,7 @@ for (const file of commandsFiles) {
 const rest = new REST({ version: "9" }).setToken(TOKEN);
 (async () => {
   await rest.put(Routes.applicationCommands(CLIENT_ID), {
-    body: commandsArray
+    body: commandsArray,
   });
 })();
 
@@ -60,5 +60,5 @@ for (const file of eventsFiles) {
 client.login(TOKEN);
 
 module.exports = {
-  discordClient: client
+  discordClient: client,
 };

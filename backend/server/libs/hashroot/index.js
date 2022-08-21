@@ -17,7 +17,7 @@ const getAllStreamerList = async () => {
       userId: info["data-id"],
       lastOnline: new Date(info["data-lastonline"]),
       channelId: info["data-streamername"],
-      streamType: "twitch"
+      streamType: "twitch",
     };
 
     return streamerData;
