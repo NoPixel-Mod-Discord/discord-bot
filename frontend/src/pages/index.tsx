@@ -24,8 +24,6 @@ const Home: NextPage<PageProps> = ({ twitchConnection }) => {
   };
 
   if (session) {
-    console.log(session.user.image);
-
     return (
       <div className="flex flex-col items-center justify-center w-full relative dark:bg-gray-900 h-full">
         <div className="flex flex-col space-y-6">
@@ -52,6 +50,9 @@ const Home: NextPage<PageProps> = ({ twitchConnection }) => {
           </Avatar>
         </div>
         <div className="absolute top-6 right-8 flex space-x-4">
+          <Link href="/gangs">
+            <Button color="light">Gangs</Button>
+          </Link>
           <Link href="/streamers">
             <Button color="light">Streamer</Button>
           </Link>

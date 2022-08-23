@@ -8,7 +8,7 @@
     "build": "turbo run build",
     "check": "turbo run check",
     "fix": "turbo run fix",
-    "start": "turbo run start --parallel",
+    "start": "npm run build && turbo run start --parallel",
     "format": "prettier --write '**/*.{ts,tsx,js,jsx,json,css,scss}'"
   },
   "repository": {
@@ -22,7 +22,8 @@
   },
   "homepage": "https://github.com/NoPixel-Mod-Discord/discord-bot#readme",
   "workspaces": [
-    "/*"
+    "frontend",
+    "backend"
   ],
   "devDependencies": {
     "prettier": "^2.7.1",
