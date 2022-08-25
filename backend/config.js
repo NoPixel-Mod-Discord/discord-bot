@@ -14,7 +14,6 @@ const Config = {
   discordClientId: process.env.DISCORD_CLIENT_ID,
   discordBotToken: process.env.DISCORD_BOT_TOKEN,
   serverAdminRoleId: process.env.ADMIN_ROLE_ID,
-  logChannel: process.env.BOT_LOG_CHANNEL
 };
 
 module.exports = {
