@@ -1,9 +1,8 @@
 // Require necessary packages
 const fs = require("node:fs");
 const path = require("node:path");
-const { Client, GatewayIntentBits, Collection } = require("discord.js");
+const { Client, GatewayIntentBits, Collection, Routes } = require("discord.js");
 const { REST } = require("@discordjs/rest");
-const { Routes } = require("discord.js");
 const { Config } = require("../config");
 
 // Require dotenv to import ENV Variables
@@ -28,7 +27,7 @@ for (const file of commandsFiles) {
   commandsArray.push(command.data.toJSON());
   client.commands.set(command.data.name, command);
 }
-// Adds commads to bot on startup
+// Adds commands to bot on startup
 const rest = new REST({ version: "9" }).setToken(Config.discordBotToken);
 (async () => {
   await rest.put(Routes.applicationCommands(Config.discordClientId), {
@@ -55,3 +54,5 @@ for (const file of eventsFiles) {
 
 // Login to Discord with your client's token
 client.login(Config.discordBotToken);
+
+module.exports = client;

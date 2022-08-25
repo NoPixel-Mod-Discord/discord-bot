@@ -1,6 +1,7 @@
 const { get } = require("axios");
 const { getTwitchAccessToken } = require("@jlengstorf/get-twitch-oauth");
 const { Config } = require("../../../config");
+const botUtils = require("../../../bot/utils/utils");
 
 const TWITCH_ENDPOINT = "https://api.twitch.tv/helix";
 
@@ -25,6 +26,7 @@ const getUserId = async userName => {
 
     return id;
   } catch (e) {
+    botUtils.log(e);
     return e;
   }
 };
@@ -50,6 +52,7 @@ const getUserName = async userId => {
 
     return login;
   } catch (e) {
+    botUtils.log(e);
     return e;
   }
 };

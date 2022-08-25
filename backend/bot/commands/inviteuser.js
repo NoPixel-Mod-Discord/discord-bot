@@ -1,4 +1,5 @@
 const { SlashCommandBuilder } = require("discord.js");
+const utils = require("../utils/utils");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -18,7 +19,11 @@ module.exports = {
       })
       .then(invite => invite.url);
 
-    await interaction.user.send(inviteUrl);
+    await interaction.user.send(inviteUrl).catch((err) => {
+      console.error(err);
+      utils.log(err);
+      return interaction.editReply('Could not send dm, you may need to adjust your privacy settings for this discord.');
+    });
 
     await interaction.editReply({
       content:
