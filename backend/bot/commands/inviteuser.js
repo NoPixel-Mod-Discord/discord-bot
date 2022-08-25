@@ -10,27 +10,29 @@ module.exports = {
   async execute(interaction) {
     await interaction.deferReply();
 
-    const inviteUrl = await interaction.guild.channels.cache
-      .find(channel => channel.id === interaction.channelId)
-      .createInvite({
-        maxAge: 43200,
-        temporary: true,
-        maxUses: 1,
-      })
-      .then(invite => invite.url);
+    try {
 
-    await interaction.user.send(inviteUrl).catch((err) => {
+      const inviteUrl = await interaction.guild.channels.cache
+        .find(channel => channel.id === interaction.channelId)
+        .createInvite({
+          maxAge: 43200,
+          temporary: true,
+          maxUses: 1,
+        })
+        .then(invite => invite.url);
+
+      await interaction.user.send(inviteUrl);
+
+      await interaction.editReply({
+        content: "<@" +
+          interaction.user.id +
+          ">" +
+          ` An invite link has been sent to your dm.`,
+      });
+
+    } catch (err) {
       console.error(err);
-      utils.log(err);
-      return interaction.editReply('Could not send dm, you may need to adjust your privacy settings for this discord.');
-    });
-
-    await interaction.editReply({
-      content:
-        "<@" +
-        interaction.user.id +
-        ">" +
-        ` An invite link has been sent to your dm.`,
-    });
+      return await interaction.followUp('Could not send dm, you may need to adjust your privacy settings for this discord server.');
+    }
   },
 };
