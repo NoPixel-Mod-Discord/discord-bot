@@ -1,5 +1,5 @@
-const { client } = require("../index");
-const { Config } = require("../../config");
+const { WebhookClient } = require("discord.js");
+const logger = new WebhookClient({ url: process.env.LOG_WEBHOOK });
 
 
 /**
@@ -7,7 +7,7 @@ const { Config } = require("../../config");
  * @param {String} str The message to send.
  */
 function log(str) {
-  client.channels.resolve(Config.logChannel).send(str);
+  logger.send(str);
 }
 
 module.exports = {
