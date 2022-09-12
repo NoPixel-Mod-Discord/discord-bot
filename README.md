@@ -17,10 +17,10 @@ NoPixel Moderation Bot is designed to maintain a record of streamers and mods in
 This application requires Node.js v16
 
 ```bash
-$ git clone git@github.com:NoPixel-Mod-Discord/discord-bot.git
-$ cd discord-bot
-$ npm install
-$ npm run dev
+git clone git@github.com:NoPixel-Mod-Discord/discord-bot.git
+cd discord-bot
+npm install
+npm run dev
 ```
 
 > **_Note_**: Please refer to the env.example file for all the environment variables.
