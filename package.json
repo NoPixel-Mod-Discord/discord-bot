@@ -22,7 +22,8 @@
   },
   "homepage": "https://github.com/NoPixel-Mod-Discord/discord-bot#readme",
   "workspaces": [
-    "/*"
+    "frontend",
+    "backend"
   ],
   "devDependencies": {
     "prettier": "^2.7.1",
