@@ -11,6 +11,7 @@ const Config = {
   twitchAccessToken: process.env.TWITCH_ACCESS_TOKEN,
   twitchClientId: process.env.TWITCH_CLIENT_ID,
   twitchClientSecret: process.env.TWITCH_CLIENT_SECRET,
+  twitchRefreshToken: process.env.TWITCH_REFRESH_TOKEN,
   discordClientId: process.env.DISCORD_CLIENT_ID,
   discordBotToken: process.env.DISCORD_BOT_TOKEN,
   serverAdminRoleId: process.env.ADMIN_ROLE_ID,

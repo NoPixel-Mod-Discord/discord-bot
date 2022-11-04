@@ -1,6 +1,5 @@
 const { Client } = require("tmi.js");
 const { Config } = require("../../../config");
-const botUtils = require("../../../bot/utils/utils");
 
 const tmiClient = new Client({
   connection: {
@@ -21,19 +20,17 @@ const getChannelMods = async streamer => {
     .then(res => res)
     .catch(err => {
       console.error(err);
-      botUtils.log(err);
     });
 
   return mods;
 };
 
-const checkUserIsMod = async streamer => {
+const getModList = async streamer => {
   const res = await tmiClient
     .mods(streamer)
     .then(mods => mods)
     .catch(err => {
       console.error(err);
-      botUtils.log(err);
     });
 
   return res;
@@ -41,5 +38,5 @@ const checkUserIsMod = async streamer => {
 
 module.exports = {
   getChannelMods,
-  checkUserIsMod,
+  getModList,
 };

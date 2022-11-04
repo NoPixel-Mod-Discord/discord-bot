@@ -1,32 +1,26 @@
-const { get } = require("axios");
-const { getTwitchAccessToken } = require("@jlengstorf/get-twitch-oauth");
 const { Config } = require("../../../config");
-const botUtils = require("../../../bot/utils/utils");
+const { getAccessToken } = require("./oauth");
+const fetch = require("node-fetch");
 
 const TWITCH_ENDPOINT = "https://api.twitch.tv/helix";
 
 const getUserId = async userName => {
   const URL = TWITCH_ENDPOINT + "/users?login=" + userName;
 
-  const { access_token: accessToken } = await getTwitchAccessToken({
-    client_id: Config.twitchClientId,
-    client_secret: Config.twitchClientSecret,
-    scopes: "user:read:email",
-  });
+  const accessToken = await getAccessToken();
 
   try {
-    const response = await get(URL, {
+    const response = await fetch(URL, {
       headers: {
-        "Client-ID": Config.twitchClientId,
+        "Client-Id": Config.twitchClientId,
         Authorization: `Bearer ${accessToken}`,
       },
-    });
+    }).then(res => res.json());
 
-    const { id } = await response.data.data[0];
+    const { id } = await response.data[0];
 
     return id;
   } catch (e) {
-    botUtils.log(e);
     return e;
   }
 };
@@ -34,25 +28,20 @@ const getUserId = async userName => {
 const getUserName = async userId => {
   const URL = TWITCH_ENDPOINT + "/users?id=" + userId;
 
-  const { access_token: accessToken } = await getTwitchAccessToken({
-    client_id: Config.twitchClientId,
-    client_secret: Config.twitchClientSecret,
-    scopes: "user:read:email",
-  });
+  const accessToken = await getAccessToken();
 
   try {
-    const response = await get(URL, {
+    const response = await fetch(URL, {
       headers: {
-        "Client-ID": Config.twitchClientId,
+        "Client-Id": Config.twitchClientId,
         Authorization: `Bearer ${accessToken}`,
       },
-    });
+    }).then(res => res.json());
 
-    const { login } = await response.data.data[0];
+    const { login } = await response.data[0];
 
     return login;
   } catch (e) {
-    botUtils.log(e);
     return e;
   }
 };

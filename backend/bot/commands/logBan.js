@@ -96,11 +96,13 @@ module.exports = {
           content: response,
         });
       } catch (e) {
+        // console.log(e.response.data.err);
         await interaction.editReply({
           content: e.response.data.err,
         });
       }
     } catch (e) {
+      // console.log(e.response.data.err);
       await interaction.editReply({
         content: e.response.data.err,
       });

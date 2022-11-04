@@ -2,7 +2,7 @@ const ReturnValue = require("../../utils/models");
 const { prismaClient } = require("../../libs/prisma");
 
 const { getUserId, getUserName } = require("../../libs/twitch/twitch-api");
-const { checkUserIsMod } = require("../../libs/twitch/tmi");
+const { getModList } = require("../../libs/twitch/tmi.js");
 const { PrismaClientValidationError } = require("@prisma/client/runtime");
 
 const addBan = async (req, res) => {
@@ -13,10 +13,10 @@ const addBan = async (req, res) => {
   if (platform === "twitch") {
     const modUserName = await getUserName(moderator);
 
-    const userIsMod = await checkUserIsMod(streamer);
+    const modList = await getModList(streamer);
 
     try {
-      if (userIsMod.includes(modUserName) === true) {
+      if (modList.includes(modUserName) === true) {
         const response = await prismaClient.ban
           .create({
             data: {
@@ -45,6 +45,7 @@ const addBan = async (req, res) => {
         retVal.body.err =
           "Username is incorrect or does not exist in Twitch database.";
       } else {
+        console.log(e);
         retVal.status = 500;
         retVal.body.err = "Something went wrong :(";
       }
